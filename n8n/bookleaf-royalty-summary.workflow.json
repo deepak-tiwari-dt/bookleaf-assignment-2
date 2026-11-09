@@ -1,0 +1,281 @@
+{
+  "name": "BookLeaf - Secure Royalty Summary",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bookleaf/royalty-summary",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "BookLeafWebhook",
+      "name": "Receive BookLeaf Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "bookleaf-royalty-summary"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst headers = item.headers || {};\nconst supplied = headers['x-bookleaf-token'] || headers['X-BookLeaf-Token'];\nif (!process.env.BOOKLEAF_WEBHOOK_SECRET || supplied !== process.env.BOOKLEAF_WEBHOOK_SECRET) { throw new Error('Unauthorized BookLeaf webhook request'); }\nconst body = item.body || item;\nif (!body.logId || !body.author?.id || !body.author?.name || !Array.isArray(body.books) || !body.totals) { throw new Error('Request is missing required author, book, ledger, or log data'); }\nreturn [{json: body}];"
+      },
+      "id": "ValidateRequest",
+      "name": "Validate Secret & Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { accepted: true, logId: $json.logId } }}",
+        "options": {
+          "responseCode": 202
+        }
+      },
+      "id": "AcceptedResponse",
+      "name": "Acknowledge Queue",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{$env.OPENAI_API_KEY}}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({model: $env.OPENAI_MODEL || 'gpt-4o-mini', temperature: 0.3, messages: [{role:'system', content:'You are BookLeaf Publishing Operations. Write a warm, professional, accurate royalty statement email. Use only the supplied ledger facts. All monetary values are INR; format with the \u20b9 symbol and Indian digit grouping. Never invent a payout date. Explain that pending balances follow a quarterly settlement cycle and are paid within 45 days after quarter close. Mention unpublished titles as production updates. Return only the email body, with greeting and closing.'},{role:'user', content: JSON.stringify({author:$json.author, books:$json.books, totals:$json.totals})}]}) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "GenerateSummary",
+      "name": "Generate Author Email with OpenAI",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        300
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const request = $('Validate Secret & Payload').first().json;\nconst response = $input.first().json;\nconst summary = response.choices?.[0]?.message?.content;\nif (!summary) throw new Error('AI response did not contain email content');\nreturn [{json:{logId:request.logId, callbackUrl:request.callbackUrl, callbackToken:request.callbackToken, status:'success', summary}}];"
+      },
+      "id": "PrepareSuccess",
+      "name": "Prepare Successful Callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        220
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$json.callbackUrl}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Callback-Token",
+              "value": "={{$json.callbackToken}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{JSON.stringify({logId:$json.logId,status:$json.status,summary:$json.summary})}}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "CallbackSuccess",
+      "name": "Update BookLeaf Notification Log",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        220
+      ],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const request = $('Validate Secret & Payload').first().json;\nconst failure = $input.first().json;\nconst message = failure.error?.message || failure.message || 'AI summary generation failed';\nreturn [{json:{logId:request.logId, callbackUrl:request.callbackUrl, callbackToken:request.callbackToken, status:'failed', error:message}}];"
+      },
+      "id": "PrepareFailure",
+      "name": "Prepare Failure Callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$json.callbackUrl}}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Callback-Token",
+              "value": "={{$json.callbackToken}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{JSON.stringify({logId:$json.logId,status:'failed',error:$json.error})}}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "CallbackFailure",
+      "name": "Log AI Failure in BookLeaf",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        420
+      ],
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    }
+  ],
+  "connections": {
+    "Receive BookLeaf Request": {
+      "main": [
+        [
+          {
+            "node": "Validate Secret & Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Secret & Payload": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Acknowledge Queue": {
+      "main": [
+        [
+          {
+            "node": "Generate Author Email with OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Author Email with OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Prepare Successful Callback",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Failure Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Successful Callback": {
+      "main": [
+        [
+          {
+            "node": "Update BookLeaf Notification Log",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Failure Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Failure Callback": {
+      "main": [
+        [
+          {
+            "node": "Log AI Failure in BookLeaf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all"
+  },
+  "versionId": "bookleaf-assignment-2-v1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

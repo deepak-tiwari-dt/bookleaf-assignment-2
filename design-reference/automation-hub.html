@@ -1,0 +1,1000 @@
+<!DOCTYPE html><html lang="en"><head>
+<title>BookLeaf | Automation Hub</title>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&amp;family=Space+Grotesk:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+    .neo-shadow {
+      box-shadow: 4px 4px 0px 0px #1c1b1b;
+    }
+    .neo-shadow-sm {
+      box-shadow: 2px 2px 0px 0px #1c1b1b;
+    }
+    .neo-shadow-lg {
+      box-shadow: 6px 6px 0px 0px #1c1b1b;
+    }
+    .neo-glow-lime {
+      box-shadow: 0 0 16px rgba(212, 255, 0, 0.45);
+    }
+    .neo-glow-cyan {
+      box-shadow: 0 0 16px rgba(0, 238, 252, 0.45);
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#00686f",
+            "surface-tint": "#536600",
+            "primary-container": "#d4ff00",
+            "secondary": "#006970",
+            "on-surface-variant": "#444932",
+            "on-primary-container": "#5f7400",
+            "surface-dim": "#dcd9d9",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c5c9ac",
+            "secondary-container": "#00eefc",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#f6f3f2",
+            "background": "#fcf9f8",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2e1",
+            "secondary-fixed": "#7df4ff",
+            "on-primary-fixed": "#171e00",
+            "surface-container-high": "#ebe7e7",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#caf300",
+            "on-background": "#1c1b1b",
+            "primary": "#536600",
+            "tertiary-fixed": "#ffd9dc",
+            "inverse-primary": "#b0d500",
+            "secondary-fixed-dim": "#00dbe9",
+            "on-secondary-fixed": "#002022",
+            "on-tertiary-fixed-variant": "#910031",
+            "surface-bright": "#fcf9f8",
+            "tertiary-fixed-dim": "#ffb2ba",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e5e2e1",
+            "inverse-surface": "#313030",
+            "on-secondary-fixed-variant": "#004f54",
+            "tertiary": "#b71945",
+            "inverse-on-surface": "#f3f0ef",
+            "outline": "#757a60",
+            "on-tertiary-fixed": "#400011",
+            "surface-container": "#f0edec",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1c1b1b",
+            "error": "#ba1a1a",
+            "tertiary-container": "#ffe9ea",
+            "on-tertiary-container": "#ca2a52",
+            "on-primary-fixed-variant": "#3e4c00",
+            "error-container": "#ffdad6",
+            "surface": "#fcf9f8",
+            "primary-fixed-dim": "#b0d500"
+          },
+          fontFamily: {
+            "body-md": ["DM Sans", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "label-lg": ["Space Grotesk", "sans-serif"],
+            "label-md": ["Space Grotesk", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-black">
+<!-- Electric Neo-Brutalist Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b-2 border-black shadow-[0_3px_0_0_#1c1b1b]">
+<div class="h-16 w-full px-6 flex items-center justify-between gap-6">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-primary-container border-2 border-black flex items-center justify-center neo-shadow-sm font-headline-sm font-bold text-black text-xl">
+          ⚡
+        </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-lg text-black font-bold tracking-tight leading-none">BookLeaf<span class="text-secondary font-black">.dev</span></span>
+<span class="font-mono text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Automations v2.4</span>
+</div>
+</div>
+<div class="hidden md:flex items-center p-1 bg-surface-container rounded-lg border-2 border-black">
+<a href="../admin/" class="px-3 py-1 rounded bg-primary-container text-black border border-black font-label-md font-bold text-xs neo-shadow-sm transition-all">Admin Portal</a>
+<a href="../author/" class="px-3 py-1 rounded text-on-surface hover:text-black font-label-md font-bold text-xs transition-colors">Author Portal</a>
+</div>
+</div>
+<!-- Dev Search / Command Bar -->
+<div class="flex-1 max-w-md hidden lg:flex items-center relative">
+<span class="material-symbols-outlined absolute left-3 text-black text-[20px]">terminal</span>
+<input class="w-full h-10 pl-10 pr-20 bg-white border-2 border-black rounded-lg text-black placeholder:text-gray-400 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-black neo-shadow-sm transition-all" placeholder="grep author_id, webhooks, isbn..." type="text">
+<div class="absolute right-2.5 flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container-high border border-black text-black font-mono text-[10px] font-bold">
+<span>⌘K</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-black text-primary-container border-2 border-black rounded-full neo-shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-mono text-[11px] font-bold tracking-wider">n8n // LIVE WEBSOCKET</span>
+</div>
+<button class="relative p-2 rounded-lg bg-surface border-2 border-black hover:bg-primary-container neo-shadow-sm transition-transform active:translate-x-0.5 active:translate-y-0.5" type="button">
+<span class="material-symbols-outlined text-[20px] text-black">notifications</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-tertiary rounded-full border border-black"></span>
+</button>
+<div class="flex items-center gap-2.5 pl-2 border-l-2 border-black">
+<img alt="Sarah Jenkins" class="w-9 h-9 rounded-lg border-2 border-black object-cover neo-shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA51K4f3b6Dg71k5u4HuItZbVmPY0dtY62ju3X6V4WtdQWRu6MQw_Lpk8_UbZ940HxdxCWgpGm4lQjf3gxGtQxTytn0NW7Bs77B36j6JvCXJgYrZEDIebyOFpAjMrP55vxTIoHqprdngoH05xS9dMxAADO5fVqLynQf8LlfZsiDZpbAGp-kkuT6-SGsVSIwseHC8s1xBY14kRyMK_Fay8LqZ0Xg_LIdswU2JVNdpGn-">
+<div class="hidden xl:flex flex-col text-left leading-tight">
+<span class="font-headline-sm font-bold text-xs text-black">Sarah Jenkins</span>
+<span class="font-mono text-[10px] text-secondary font-bold">Ops Lead ⚡</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Neo-Brutalist Sidebar Navigation -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest border-r-2 border-black z-40 flex flex-col justify-between p-4">
+<div class="flex flex-col gap-3">
+<div class="px-2 py-1 bg-black text-primary-container rounded border border-black inline-flex items-center justify-between">
+<span class="font-mono text-[10px] uppercase font-bold tracking-widest">PUBLISHING OPS</span>
+<span class="text-xs">⚡</span>
+</div>
+<nav class="flex flex-col gap-1.5" data-active-classes="bg-primary-container text-black border-2 border-black neo-shadow-sm font-bold">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-black hover:bg-surface-container hover:border-2 hover:border-black font-headline-sm text-sm font-medium transition-all" data-path="overview-authors" href="../admin/">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Overview &amp; Authors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-black hover:bg-surface-container hover:border-2 hover:border-black font-headline-sm text-sm font-medium transition-all" data-path="book-catalog-print-partners" href="../author/">
+<span class="material-symbols-outlined text-[20px]">auto_stories</span>
+<span>Book Catalog &amp; Print</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-black hover:bg-surface-container hover:border-2 hover:border-black font-headline-sm text-sm font-medium transition-all" data-path="royalty-engine-payouts" href="../author/">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Royalty Engine</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary-container text-black border-2 border-black neo-shadow-sm font-headline-sm text-sm font-bold" data-path="n8n-automation-logs" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span>n8n Hub &amp; Workflows</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-black hover:bg-surface-container hover:border-2 hover:border-black font-headline-sm text-sm font-medium transition-all" data-path="documentation-architecture" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span>Docs &amp; Specs</span>
+</a>
+</nav>
+</div>
+<!-- Environment Badge / Terminal Card -->
+<div class="p-3 bg-black text-white rounded-xl border-2 border-black neo-shadow">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-mono text-[10px] uppercase tracking-widest text-primary-container font-bold">CLUSTER RUNTIME</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-container text-black font-mono text-[9px] font-extrabold">LIVE</span>
+</div>
+<div class="font-mono text-xs text-secondary-container font-bold">PROD-US-E1</div>
+<div class="mt-1 font-mono text-[10px] text-gray-400">BookLeaf Engine v2.4.9</div>
+<div class="mt-2 pt-2 border-t border-gray-800 flex items-center justify-between text-[10px] font-mono text-gray-300">
+<span>Latency</span>
+<span class="text-primary-container font-bold">18ms</span>
+</div>
+</div>
+</aside>
+<!-- Main Developer Playground Workspace -->
+<div class="pl-64">
+<main class="relative pt-16 bg-surface min-h-[calc(100vh-4rem)] w-full p-8">
+<div class="flex flex-col w-full max-w-7xl mx-auto space-y-8">
+<!-- Dev Control Header & System Security Status Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-6 bg-surface-container-lowest border-2 border-black rounded-2xl neo-shadow">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2.5 py-0.5 rounded-full bg-black text-white font-mono text-[10px] font-bold tracking-wider uppercase">
+              WORKFLOW NODE 04
+            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-primary-container text-black border border-black font-headline-sm font-bold text-xs neo-shadow-sm">
+<span class="w-2 h-2 rounded-full bg-black animate-ping"></span>
+              PIPELINE OPERATIONAL ⚡
+            </span>
+</div>
+<h1 class="font-headline-lg text-3xl md:text-4xl text-black font-bold tracking-tight">
+            n8n Automation Engine &amp; Royalty Notifier
+          </h1>
+<p class="font-body-md text-sm text-secondary font-medium mt-1">
+            Bi-directional author statement pipeline connecting Bubble.io data models, LLM tone refinement, and automated SMTP dispatch.
+          </p>
+</div>
+<div class="flex flex-wrap items-center gap-2.5">
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border-2 border-black rounded-lg neo-shadow-sm font-mono text-xs font-bold text-black">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span>Bearer: Active</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border-2 border-black rounded-lg neo-shadow-sm font-mono text-xs font-bold text-black">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock_clock</span>
+<span>Idempotency: 15m</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low border-2 border-black rounded-lg neo-shadow-sm font-mono text-xs font-bold text-black">
+<span class="material-symbols-outlined text-[16px] text-tertiary">emergency_home</span>
+<span>Auto-Failover 🛡️</span>
+</div>
+<button class="flex items-center gap-1.5 px-4 py-2 bg-black text-primary-container border-2 border-black rounded-lg font-headline-sm text-xs font-bold hover:bg-gray-900 neo-shadow transition-transform active:translate-x-0.5 active:translate-y-0.5" id="refreshPipelineBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Poll Webhook Logs</span>
+</button>
+</div>
+</div>
+<!-- Cyberpunk / Neo-Brutalist Node Orchestration Visual Graph -->
+<div class="w-full bg-surface-container-lowest border-2 border-black rounded-2xl p-6 neo-shadow">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b-2 border-black">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-secondary-container border-2 border-black flex items-center justify-center neo-shadow-sm">
+<span class="material-symbols-outlined text-black text-[20px]">account_tree</span>
+</div>
+<div>
+<h2 class="font-headline-md text-lg text-black font-bold">
+                Orchestration Graph: Bubble ⇄ n8n ⇄ LLM ⇄ Dispatch
+              </h2>
+<span class="font-mono text-xs text-secondary font-medium">Visual Node Pipeline Execution Stream</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-black px-3 py-1.5 rounded-lg border border-black neo-shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-mono text-xs text-primary-container font-bold">n8n-cluster.bookleaf.internal</span>
+</div>
+</div>
+<!-- 5 Neo-Brutalist Pipeline Nodes -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+<!-- Node Step 1 -->
+<div class="bg-surface-container-low border-2 border-black rounded-xl p-4 flex flex-col justify-between neo-shadow-sm hover:translate-y-[-2px] transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-black text-primary-container font-mono text-[10px] font-bold">STEP 01</span>
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-black shadow-[0_0_8px_#10b981]"></span>
+</div>
+<div class="font-headline-sm text-sm text-black font-bold mb-1">Webhook Ingestion</div>
+<p class="font-body-md text-xs text-secondary leading-snug">
+                Receives Bubble trigger with author ID &amp; token validation.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-black/10 flex items-center justify-between">
+<span class="font-mono text-[10px] bg-white border border-black px-1.5 py-0.5 rounded font-bold text-black">POST /auth/trigger</span>
+<span class="font-mono text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-500 px-1.5 py-0.5 rounded font-bold">200 OK</span>
+</div>
+</div>
+<!-- Node Step 2 -->
+<div class="bg-surface-container-low border-2 border-black rounded-xl p-4 flex flex-col justify-between neo-shadow-sm hover:translate-y-[-2px] transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-black text-secondary-container font-mono text-[10px] font-bold">STEP 02</span>
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-black shadow-[0_0_8px_#10b981]"></span>
+</div>
+<div class="font-headline-sm text-sm text-black font-bold mb-1">Bubble Data API Fetch</div>
+<p class="font-body-md text-xs text-secondary leading-snug">
+                Queries ledger, contract splits, and pending titles in print pipelines.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-black/10 flex items-center justify-between">
+<span class="font-mono text-[10px] bg-white border border-black px-1.5 py-0.5 rounded font-bold text-black">GET /obj/royalty</span>
+<span class="font-mono text-[10px] bg-secondary-fixed text-black border border-black px-1.5 py-0.5 rounded font-bold">~112ms</span>
+</div>
+</div>
+<!-- Node Step 3 -->
+<div class="bg-surface-container-low border-2 border-black rounded-xl p-4 flex flex-col justify-between neo-shadow-sm hover:translate-y-[-2px] transition-transform relative ring-2 ring-primary-container">
+<span class="absolute -top-2.5 right-3 bg-primary-container text-black font-mono text-[9px] font-extrabold px-1.5 py-0.2 rounded border border-black">AI AGENT</span>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-black text-white font-mono text-[10px] font-bold">STEP 03</span>
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container border border-black shadow-[0_0_8px_#d4ff00]"></span>
+</div>
+<div class="font-headline-sm text-sm text-black font-bold mb-1">AI Prompt Synthesis</div>
+<p class="font-body-md text-xs text-secondary leading-snug">
+                Injects BookLeaf Knowledge Base, 45-day cycle rules, and warm editorial tone.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-black/10 flex items-center justify-between">
+<span class="font-mono text-[10px] bg-primary-container text-black border border-black px-1.5 py-0.5 rounded font-bold">⚡ Claude 3.5</span>
+<span class="font-mono text-[10px] bg-tertiary-container text-tertiary border border-tertiary px-1.5 py-0.5 rounded font-bold">1,240 tkn</span>
+</div>
+</div>
+<!-- Node Step 4 -->
+<div class="bg-surface-container-low border-2 border-black rounded-xl p-4 flex flex-col justify-between neo-shadow-sm hover:translate-y-[-2px] transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-black text-primary-container font-mono text-[10px] font-bold">STEP 04</span>
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-black shadow-[0_0_8px_#10b981]"></span>
+</div>
+<div class="font-headline-sm text-sm text-black font-bold mb-1">Dispatch &amp; DB Append</div>
+<p class="font-body-md text-xs text-secondary leading-snug">
+                Renders transactional SMTP memo and archives copy in Bubble author log.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-black/10 flex items-center justify-between">
+<span class="font-mono text-[10px] bg-white border border-black px-1.5 py-0.5 rounded font-bold text-black">Postmark SMTP</span>
+<span class="font-mono text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-500 px-1.5 py-0.5 rounded font-bold">Delivered</span>
+</div>
+</div>
+<!-- Node Step 5 -->
+<div class="bg-surface-container-low border-2 border-black rounded-xl p-4 flex flex-col justify-between neo-shadow-sm hover:translate-y-[-2px] transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-black text-secondary-container font-mono text-[10px] font-bold">STEP 05</span>
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-black shadow-[0_0_8px_#10b981]"></span>
+</div>
+<div class="font-headline-sm text-sm text-black font-bold mb-1">Callback Status Sync</div>
+<p class="font-body-md text-xs text-secondary leading-snug">
+                Posts execution status (<code class="text-emerald-700 font-mono font-bold">Success</code> / <code class="text-error font-mono font-bold">Failed</code>) back to Bubble app state.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-black/10 flex items-center justify-between">
+<span class="font-mono text-[10px] bg-white border border-black px-1.5 py-0.5 rounded font-bold text-black">PATCH /state</span>
+<span class="font-mono text-[10px] bg-emerald-100 text-emerald-900 border border-emerald-500 px-1.5 py-0.5 rounded font-bold">Ack 200</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Operational Split: Dev Trigger Console & Live AI Memo Preview -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Manual Trigger Console (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div class="bg-surface-container-lowest border-2 border-black rounded-2xl p-6 neo-shadow">
+<div class="flex items-center justify-between mb-3 pb-3 border-b-2 border-black">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-primary-container border-2 border-black rounded-md flex items-center justify-center neo-shadow-sm font-bold text-black">
+                  ⚡
+                </div>
+<h3 class="font-headline-md text-lg text-black font-bold">Manual Trigger Console</h3>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+                Guard Active 🛡️
+              </span>
+</div>
+<p class="font-body-md text-xs text-secondary mb-4 leading-relaxed font-medium">
+              Execute isolated test cycles or send urgent royalty statement dispatches. Redundant rapid clicks will automatically collapse into a single deduplicated execution.
+            </p>
+<form class="flex flex-col gap-4" id="triggerForm" onsubmit="event.preventDefault(); window.runMockExecution();">
+<div>
+<label class="block font-headline-sm text-xs font-bold text-black uppercase tracking-wider mb-1.5">
+                  Target Author Entity
+                </label>
+<select class="w-full h-11 px-3 bg-white border-2 border-black rounded-xl text-black font-mono text-xs font-medium focus:outline-none focus:ring-2 focus:ring-primary-container neo-shadow-sm" id="authorSelect">
+<option value="AUTH-4089">Marcus Vance (AUTH-4089) — Balance Pending $12,400.00</option>
+<option value="AUTH-1902">Elena Rostova (AUTH-1902) — All Royalties Paid Up</option>
+<option value="AUTH-8821">David Sterling (AUTH-8821) — 2 Titles In Production</option>
+<option value="AUTH-5114">Clara Hughes (AUTH-5114) — Multi-tier Print Partner</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-headline-sm text-xs font-bold text-black uppercase tracking-wider mb-1.5">
+                    AI Model Engine
+                  </label>
+<select class="w-full h-11 px-3 bg-white border-2 border-black rounded-xl text-black font-mono text-xs font-medium focus:outline-none focus:ring-2 focus:ring-primary-container neo-shadow-sm" id="modelSelect">
+<option value="Claude 3.5 Haiku">Anthropic Claude 3.5 Haiku</option>
+<option value="OpenAI GPT-4o-mini">OpenAI GPT-4o-mini</option>
+</select>
+</div>
+<div>
+<label class="block font-headline-sm text-xs font-bold text-black uppercase tracking-wider mb-1.5">
+                    Execution Mode
+                  </label>
+<select class="w-full h-11 px-3 bg-white border-2 border-black rounded-xl text-black font-mono text-xs font-medium focus:outline-none focus:ring-2 focus:ring-primary-container neo-shadow-sm" id="modeSelect">
+<option value="dry_run">Dry Run (No Email Sent)</option>
+<option value="live_dispatch">Live SMTP &amp; DB Update</option>
+</select>
+</div>
+</div>
+<!-- Idempotency & Debounce Neo-Warning Card -->
+<div class="p-3 bg-surface-container border-2 border-black rounded-xl flex items-start gap-2.5">
+<span class="material-symbols-outlined text-black text-[20px] shrink-0 mt-0.5">lock_clock</span>
+<div class="text-black font-mono text-[11px] leading-tight">
+<span class="font-bold underline">De-duplication Policy:</span> If triggered within 15 minutes for the same author ID, n8n discards secondary requests and returns the cached execution payload.
+                </div>
+</div>
+<div class="flex items-center gap-3 pt-1">
+<button class="flex-1 py-3 px-4 bg-primary-container text-black border-2 border-black rounded-xl font-headline-sm text-sm font-extrabold hover:bg-lime-300 neo-shadow transition-transform active:translate-x-1 active:translate-y-1 flex items-center justify-center gap-2 cursor-pointer" id="triggerBtn" type="submit">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+<span id="triggerBtnText">Blast Summary ⚡</span>
+</button>
+<button class="py-3 px-3 bg-error-container text-on-error-container border-2 border-black rounded-xl font-headline-sm text-xs font-bold hover:bg-red-200 neo-shadow transition-transform active:translate-x-1 active:translate-y-1 cursor-pointer" onclick="window.triggerSimulatedFailure()" title="Simulate AI API Failure / Error State" type="button">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</button>
+</div>
+</form>
+<div class="hidden mt-4 p-3.5 rounded-xl border-2 border-black font-mono text-xs font-bold neo-shadow-sm" id="triggerStatusBanner"></div>
+</div>
+<!-- Bulk Process Telemetry Mini-Card -->
+<div class="bg-surface-container-lowest border-2 border-black rounded-2xl p-6 neo-shadow">
+<div class="flex items-center justify-between mb-2">
+<div>
+<span class="font-mono text-[10px] uppercase font-bold tracking-wider text-secondary">Batch Automation Engine</span>
+<div class="font-headline-sm text-base text-black font-bold">Quarterly Settlement Run (Q3)</div>
+</div>
+<span class="px-2.5 py-1 bg-black text-primary-container border border-black font-mono text-[11px] font-bold rounded-lg neo-shadow-sm">
+                420 Authors Pending
+              </span>
+</div>
+<div class="w-full bg-white border-2 border-black rounded-full h-4 my-3 overflow-hidden p-0.5">
+<div class="bg-primary-container h-full rounded-full border border-black neo-glow-lime" style="width: 68%;"></div>
+</div>
+<div class="flex items-center justify-between font-mono text-xs font-bold text-black">
+<span>Progress: 285 / 420 Completed</span>
+<span class="bg-primary-container px-2 py-0.5 rounded border border-black">67.8%</span>
+</div>
+</div>
+</div>
+<!-- AI Output & Prompt Compliance Preview (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest border-2 border-black rounded-2xl p-6 neo-shadow flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-4 border-b-2 border-black">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container border-2 border-black flex items-center justify-center neo-shadow-sm font-bold">
+                  ✉️
+                </div>
+<div>
+<span class="font-mono text-[10px] uppercase font-bold tracking-wider text-secondary">Tone &amp; Specification Verification</span>
+<h3 class="font-headline-md text-lg text-black font-bold">Live Generated Royalty Memo Preview</h3>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container text-black border border-black font-mono text-xs font-bold neo-shadow-sm">
+<span>AI Tone Check: Passed ✨</span>
+</span>
+<button class="p-1.5 bg-white border-2 border-black rounded-lg hover:bg-surface-container neo-shadow-sm" onclick="navigator.clipboard.writeText(document.getElementById('emailPreviewBody').innerText)" title="Copy raw memo" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Styled Creator / Editorial Memo View -->
+<div class="bg-surface border-2 border-black rounded-xl p-5 neo-shadow-sm">
+<!-- Memo Meta Headers -->
+<div class="bg-white border-2 border-black p-3.5 rounded-lg mb-4 flex flex-col gap-1.5 font-mono text-xs">
+<div class="flex items-center justify-between text-black">
+<span><strong>To:</strong> Marcus Vance &lt;m.vance@authorvault.io&gt;</span>
+<span class="px-2 py-0.5 rounded bg-primary-container border border-black font-bold">AUTH-4089</span>
+</div>
+<div class="text-secondary">
+<span><strong>From:</strong> BookLeaf Author Operations &lt;settlements@bookleafpublishing.com&gt;</span>
+</div>
+<div class="text-black font-headline-sm font-bold text-sm pt-1 border-t border-gray-200">
+                  Subject: Your Q3 2024 BookLeaf Royalty Summary &amp; Payout Schedule
+                </div>
+</div>
+<!-- Memo Body with Knowledge Base Compliance -->
+<div class="bg-white border-2 border-black p-5 rounded-lg text-black font-body-md text-sm leading-relaxed flex flex-col gap-3" id="emailPreviewBody">
+<p class="font-medium">Dear Marcus,</p>
+<p>
+                  We hope you are enjoying a deeply productive writing season. Enclosed is your consolidated quarterly royalty reconciliation and disbursement overview for <strong>Q3 2024</strong> across all digital and print distribution channels.
+                </p>
+<!-- Book Breakdown Table -->
+<div class="my-1 bg-surface border-2 border-black rounded-lg p-3">
+<div class="font-mono text-[11px] uppercase text-black font-bold mb-2 tracking-wider flex items-center justify-between">
+<span>Catalog Performance Summary</span>
+<span class="text-[10px] text-secondary">Verified Ledger</span>
+</div>
+<div class="grid grid-cols-3 gap-2 font-mono text-xs pb-1.5 border-b border-black text-secondary font-bold">
+<span>Title</span>
+<span class="text-center">Units Sold</span>
+<span class="text-right">Royalty Share</span>
+</div>
+<div class="grid grid-cols-3 gap-2 font-mono text-xs py-1.5 border-b border-gray-200 font-medium text-black">
+<span class="truncate">Shadows of the Archipelago</span>
+<span class="text-center">4,120</span>
+<span class="text-right font-bold text-black">$14,832.00</span>
+</div>
+<div class="grid grid-cols-3 gap-2 font-mono text-xs py-1.5 font-medium text-black">
+<span class="truncate">Whispers at High Tide (Hardcover)</span>
+<span class="text-center">1,890</span>
+<span class="text-right font-bold text-black">$7,568.00</span>
+</div>
+</div>
+<!-- Ledger Breakdown Callout -->
+<div class="p-3.5 bg-surface-container border-2 border-black rounded-lg flex flex-col gap-1.5 font-mono">
+<div class="flex justify-between text-xs text-secondary font-medium">
+<span>Total Royalties Earned to Date:</span>
+<span class="text-black font-bold">$22,400.00</span>
+</div>
+<div class="flex justify-between text-xs text-secondary font-medium">
+<span>Historical Disbursements Issued:</span>
+<span class="text-tertiary font-bold">-$10,000.00</span>
+</div>
+<div class="flex justify-between text-sm pt-1.5 border-t-2 border-black font-bold">
+<span class="text-black">Net Balance Pending Disbursement:</span>
+<span class="text-black bg-primary-container px-2 py-0.5 rounded border border-black font-black">$12,400.00</span>
+</div>
+</div>
+<p class="font-mono text-xs text-secondary leading-snug">
+<strong>Disbursement Schedule:</strong> Under BookLeaf’s standard quarterly settlement schedule, remaining balances enter remittance 45 days following quarter close. Your electronic wire is scheduled for release on <strong>November 15, 2024</strong>.
+                </p>
+<div class="p-3 bg-secondary-fixed/50 border-2 border-black rounded-lg text-black font-mono text-xs flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] shrink-0 text-black">menu_book</span>
+<span><strong>Production Note:</strong> Your forthcoming manuscript <em>The Cartographer's Dream</em> is currently undergoing final interior proof review with Epitome Books. We will notify you immediately once pre-orders activate.</span>
+</div>
+<p class="pt-2 font-body-md text-xs leading-tight">
+                  Warm regards,<br>
+<strong class="font-headline-sm text-sm text-black">The BookLeaf Operations Team</strong><br>
+<span class="text-secondary font-mono text-[11px]">BookLeaf Publishing Group</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Compliance Tags / Badges -->
+<div class="flex flex-wrap items-center gap-2 pt-4 mt-2 border-t-2 border-black">
+<span class="font-mono text-[10px] font-bold text-black uppercase">Rules Validated:</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">✓ Author Greeting Present</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">✓ Total/Earned/Pending Breakdown</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">✓ 45-day Cycle Policy Noted</span>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">✓ Print Production Status Flagged</span>
+</div>
+</div>
+</div>
+<!-- Neo-Brutalist Live Execution Log Table -->
+<div class="w-full bg-surface-container-lowest border-2 border-black rounded-2xl p-6 neo-shadow">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-3 border-b-2 border-black">
+<div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container border-2 border-black flex items-center justify-center neo-shadow-sm font-bold">
+                📋
+              </div>
+<h2 class="font-headline-md text-xl text-black font-bold">Live Notification &amp; Execution Log</h2>
+</div>
+<p class="font-mono text-xs text-secondary mt-1">
+              Bi-directional audit trail linking Bubble triggers, AI model response times, email deliverables, and webhook acknowledgment codes.
+            </p>
+</div>
+<!-- Filters & Actions -->
+<div class="flex items-center gap-2.5">
+<select class="h-10 px-3 bg-white border-2 border-black rounded-xl text-black font-mono text-xs font-bold neo-shadow-sm focus:outline-none" id="statusFilter">
+<option value="all">⚡ All Statuses</option>
+<option value="success">✓ Success Only</option>
+<option value="failed">✕ Errors / Failures</option>
+</select>
+<button class="h-10 px-4 bg-surface border-2 border-black text-black hover:bg-surface-container rounded-xl font-headline-sm text-xs font-bold neo-shadow-sm transition-transform active:translate-x-0.5 active:translate-y-0.5" onclick="window.clearMockLogs()" type="button">
+              Clear View
+            </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="executionLogTable">
+<thead>
+<tr class="bg-black text-white font-mono text-[11px] uppercase tracking-wider h-11 border-2 border-black">
+<th class="px-4">Timestamp</th>
+<th class="px-4">Author / Target</th>
+<th class="px-4">Trigger Source</th>
+<th class="px-4">AI Engine</th>
+<th class="px-4">SMTP Dispatch</th>
+<th class="px-4">Callback Ack</th>
+<th class="px-4 text-right">Latency</th>
+<th class="px-4 text-right">Inspect</th>
+</tr>
+</thead>
+<tbody class="divide-y-2 divide-black text-xs font-mono text-black" id="logTableBody">
+<!-- Row 1: Success -->
+<tr class="hover:bg-primary-container/20 transition-colors h-14 bg-white" data-status="success">
+<td class="px-4 font-mono font-bold text-gray-700">2024-10-24 14:32:01</td>
+<td class="px-4">
+<div class="font-headline-sm font-bold text-sm text-black">Marcus Vance</div>
+<div class="font-mono text-[10px] text-secondary font-bold">AUTH-4089</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-black text-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="material-symbols-outlined text-[13px]">touch_app</span> Admin Manual
+                  </span>
+</td>
+<td class="px-4">
+<div class="font-bold text-black">Claude 3.5 Haiku</div>
+<div class="text-[10px] text-secondary">Prompt v2.4 (Strict)</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="w-2 h-2 rounded-full bg-black"></span> Sent #99102
+                  </span>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-500 font-mono text-[10px] font-bold">
+                    Success (200)
+                  </span>
+</td>
+<td class="px-4 text-right font-mono font-bold text-black">
+                  640 ms
+                </td>
+<td class="px-4 text-right">
+<button class="p-1.5 bg-white border border-black rounded-lg hover:bg-primary-container neo-shadow-sm" onclick="window.viewPayloadModal('AUTH-4089', 'success')" title="View Payload JSON" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Failed Example gracefully handled per prompt Section C -->
+<tr class="hover:bg-red-100 transition-colors h-14 bg-error-container/40" data-status="failed">
+<td class="px-4 font-mono font-bold text-error">2024-10-24 14:18:22</td>
+<td class="px-4">
+<div class="font-headline-sm font-bold text-sm text-black">Jonathan Sterling</div>
+<div class="font-mono text-[10px] text-error font-bold">AUTH-0831</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-black text-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="material-symbols-outlined text-[13px]">schedule</span> Cron Batch Q3
+                  </span>
+</td>
+<td class="px-4">
+<div class="font-bold text-error">Anthropic Claude</div>
+<div class="text-[10px] text-error font-semibold">AI API 504 Timeout</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-yellow-200 text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+                    ⚠️ Timeout Aborted
+                  </span>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-red-100 text-error border border-error font-mono text-[10px] font-bold">
+                    Failed (Bubble Logged)
+                  </span>
+</td>
+<td class="px-4 text-right font-mono font-bold text-error">
+                  5,002 ms
+                </td>
+<td class="px-4 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 bg-white border border-black rounded-lg hover:bg-error-container neo-shadow-sm text-error" onclick="window.viewPayloadModal('AUTH-0831', 'error')" title="View Error Diagnostic" type="button">
+<span class="material-symbols-outlined text-[18px]">bug_report</span>
+</button>
+<button class="px-2.5 py-1 bg-black text-primary-container border border-black font-headline-sm font-bold text-[11px] rounded-lg neo-shadow-sm hover:bg-gray-800" onclick="window.retryExecution('AUTH-0831')" title="Retry Step" type="button">
+                      Retry
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Success -->
+<tr class="hover:bg-primary-container/20 transition-colors h-14 bg-white" data-status="success">
+<td class="px-4 font-mono font-bold text-gray-700">2024-10-24 14:15:09</td>
+<td class="px-4">
+<div class="font-headline-sm font-bold text-sm text-black">Elena Rostova</div>
+<div class="font-mono text-[10px] text-secondary font-bold">AUTH-1902</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-black text-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="material-symbols-outlined text-[13px]">touch_app</span> Admin Manual
+                  </span>
+</td>
+<td class="px-4">
+<div class="font-bold text-black">GPT-4o-mini</div>
+<div class="text-[10px] text-secondary">Prompt v2.4</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="w-2 h-2 rounded-full bg-black"></span> Sent #99088
+                  </span>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-500 font-mono text-[10px] font-bold">
+                    Success (200)
+                  </span>
+</td>
+<td class="px-4 text-right font-mono font-bold text-black">
+                  780 ms
+                </td>
+<td class="px-4 text-right">
+<button class="p-1.5 bg-white border border-black rounded-lg hover:bg-primary-container neo-shadow-sm" onclick="window.viewPayloadModal('AUTH-1902', 'success')" title="View Payload JSON" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Idempotent Deduped Example -->
+<tr class="hover:bg-primary-container/20 transition-colors h-14 bg-white" data-status="success">
+<td class="px-4 font-mono font-bold text-gray-700">2024-10-24 13:58:14</td>
+<td class="px-4">
+<div class="font-headline-sm font-bold text-sm text-black">David Sterling</div>
+<div class="font-mono text-[10px] text-secondary font-bold">AUTH-8821</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-black text-black font-mono text-[10px] font-bold neo-shadow-sm">
+<span class="material-symbols-outlined text-[13px]">call_merge</span> Deduped Trigger
+                  </span>
+</td>
+<td class="px-4">
+<div class="font-bold text-black">Cache Served</div>
+<div class="text-[10px] text-secondary">Idempotency Hit (15m)</div>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+                    ⚡ Cache Hit
+                  </span>
+</td>
+<td class="px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-500 font-mono text-[10px] font-bold">
+                    Success (304)
+                  </span>
+</td>
+<td class="px-4 text-right font-mono font-bold text-black">
+                  18 ms
+                </td>
+<td class="px-4 text-right">
+<button class="p-1.5 bg-white border border-black rounded-lg hover:bg-primary-container neo-shadow-sm" onclick="window.viewPayloadModal('AUTH-8821', 'dedupe')" title="View Payload JSON" type="button">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Built-in Compliance Architecture: 3 Punchy Modular Cards -->
+<div class="p-6 bg-surface-container-lowest border-2 border-black rounded-2xl neo-shadow">
+<div class="flex items-center gap-2 mb-4 pb-3 border-b-2 border-black">
+<div class="w-7 h-7 bg-primary-container border-2 border-black rounded-md flex items-center justify-center neo-shadow-sm font-bold text-black">
+            🛡️
+          </div>
+<h4 class="font-headline-md text-lg text-black font-bold">Assignment Section B &amp; C Built-in Compliance Architecture</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="p-5 bg-surface border-2 border-black rounded-xl neo-shadow-sm flex flex-col justify-between">
+<div>
+<div class="inline-block px-3 py-1 bg-primary-container text-black border border-black rounded-full font-mono text-xs font-black mb-3 neo-shadow-sm">
+                01. ERROR HANDLING IN N8N
+              </div>
+<p class="font-body-md text-xs text-secondary leading-relaxed font-medium">
+                Catch-nodes intercept AI timeouts or Bubble API 500s. The workflow does not fail silently: it posts an error record with the exact code to Bubble's notification log and updates status to <code class="text-error font-mono font-bold bg-white px-1 py-0.5 border border-error rounded">Failed</code>.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t border-black/10 flex items-center gap-1.5 font-mono text-[10px] text-black font-bold">
+<span class="text-emerald-600 font-bold">✓</span> No silent drops
+            </div>
+</div>
+<!-- Card 2 -->
+<div class="p-5 bg-surface border-2 border-black rounded-xl neo-shadow-sm flex flex-col justify-between">
+<div>
+<div class="inline-block px-3 py-1 bg-secondary-container text-black border border-black rounded-full font-mono text-xs font-black mb-3 neo-shadow-sm">
+                02. NON-BLOCKING BUBBLE UI
+              </div>
+<p class="font-body-md text-xs text-secondary leading-relaxed font-medium">
+                The frontend never hangs on an indefinite spinner. Webhook triggers respond with an asynchronous Task ID within 250ms, then poll or listen on the WebSocket channel for final ACK.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t border-black/10 flex items-center gap-1.5 font-mono text-[10px] text-black font-bold">
+<span class="text-emerald-600 font-bold">✓</span> Async callback channel
+            </div>
+</div>
+<!-- Card 3 -->
+<div class="p-5 bg-surface border-2 border-black rounded-xl neo-shadow-sm flex flex-col justify-between">
+<div>
+<div class="inline-block px-3 py-1 bg-tertiary-fixed text-black border border-black rounded-full font-mono text-xs font-black mb-3 neo-shadow-sm">
+                03. ROBUST IDEMPOTENCY
+              </div>
+<p class="font-body-md text-xs text-secondary leading-relaxed font-medium">
+                Rapid multi-clicks generate identical hash digests (<code class="font-mono text-black font-bold bg-white px-1 py-0.5 border border-black rounded">author_id + cycle_period</code>). n8n deduplicates active runs, returning the existing job ID rather than double-emailing authors.
+              </p>
+</div>
+<div class="mt-4 pt-2 border-t border-black/10 flex items-center gap-1.5 font-mono text-[10px] text-black font-bold">
+<span class="text-emerald-600 font-bold">✓</span> 15m Hash Collision Guard
+            </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- JSON Inspection Drawer / Modal -->
+<div class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4" id="payloadModal">
+<div class="bg-surface-container-lowest border-4 border-black rounded-2xl max-w-2xl w-full p-6 neo-shadow-lg flex flex-col max-h-[85vh]">
+<div class="flex items-center justify-between pb-3 border-b-2 border-black">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-primary-container border-2 border-black rounded flex items-center justify-center font-mono font-bold text-xs">
+          {}
+        </div>
+<h3 class="font-headline-sm text-lg text-black font-bold" id="modalTitle">Payload Diagnostic Inspector</h3>
+</div>
+<button class="p-1 border-2 border-black rounded-lg hover:bg-surface-container neo-shadow-sm" onclick="window.closePayloadModal()" type="button">
+<span class="material-symbols-outlined text-[20px] text-black">close</span>
+</button>
+</div>
+<div class="my-4 overflow-y-auto bg-black p-4 rounded-xl border-2 border-black font-mono text-xs text-primary-container">
+<pre class="whitespace-pre-wrap leading-relaxed" id="modalJsonContent"></pre>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-mono text-xs text-black font-bold" id="modalStatusBadge">Status: Verified</span>
+<button class="px-5 py-2.5 bg-black text-primary-container border-2 border-black rounded-xl font-headline-sm text-xs font-extrabold hover:bg-gray-900 neo-shadow transition-transform active:translate-x-0.5 active:translate-y-0.5" onclick="window.closePayloadModal()" type="button">
+        Dismiss Inspector
+      </button>
+</div>
+</div>
+</div>
+<!-- Interactive Demo Logic -->
+<script>
+  window.runMockExecution = function() {
+    const btn = document.getElementById('triggerBtn');
+    const btnText = document.getElementById('triggerBtnText');
+    const banner = document.getElementById('triggerStatusBanner');
+    const authorSelect = document.getElementById('authorSelect');
+    const authorId = authorSelect.value;
+    const model = document.getElementById('modelSelect').value;
+    
+    btn.disabled = true;
+    btnText.textContent = "Dispatched to n8n...";
+    banner.className = "mt-4 p-3.5 rounded-xl border-2 border-black font-mono text-xs font-bold bg-secondary-container text-black flex items-center gap-2 neo-shadow-sm";
+    banner.innerHTML = `<span class="material-symbols-outlined text-black text-[18px] animate-spin">progress_activity</span><span>Validating idempotency key &amp; executing ${model}...</span>`;
+    banner.classList.remove('hidden');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btnText.textContent = "Blast Summary ⚡";
+      banner.className = "mt-4 p-3.5 rounded-xl border-2 border-black font-mono text-xs font-bold bg-primary-container text-black flex items-center gap-2 neo-shadow-sm";
+      banner.innerHTML = `<span class="material-symbols-outlined text-black text-[18px]">check_circle</span><span><strong>Success:</strong> Webhook responded 200 OK. Notification logged in Bubble, memo dispatched to author.</span>`;
+
+      // Prepend fresh execution row
+      const tableBody = document.getElementById('logTableBody');
+      const newRow = document.createElement('tr');
+      newRow.className = "hover:bg-primary-container/20 transition-colors h-14 bg-primary-container/10 border-b-2 border-black";
+      newRow.setAttribute('data-status', 'success');
+      const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
+      newRow.innerHTML = `
+        <td class="px-4 font-mono font-bold text-gray-700">${now}</td>
+        <td class="px-4">
+          <div class="font-headline-sm font-bold text-sm text-black">Marcus Vance</div>
+          <div class="font-mono text-[10px] text-secondary font-bold">${authorId}</div>
+        </td>
+        <td class="px-4">
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-black text-black font-mono text-[10px] font-bold neo-shadow-sm">
+            <span class="material-symbols-outlined text-[13px]">touch_app</span> Admin Manual
+          </span>
+        </td>
+        <td class="px-4">
+          <div class="font-bold text-black">${model}</div>
+          <div class="text-[10px] text-secondary">Prompt v2.4 (Live)</div>
+        </td>
+        <td class="px-4">
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container text-black border border-black font-mono text-[10px] font-bold neo-shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-black"></span> Sent #99105
+          </span>
+        </td>
+        <td class="px-4">
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-900 border border-emerald-500 font-mono text-[10px] font-bold">
+            Success (200)
+          </span>
+        </td>
+        <td class="px-4 text-right font-mono font-bold text-black">492 ms</td>
+        <td class="px-4 text-right">
+          <button type="button" onclick="window.viewPayloadModal('${authorId}', 'success')" class="p-1.5 bg-white border border-black rounded-lg hover:bg-primary-container neo-shadow-sm" title="View Payload JSON">
+            <span class="material-symbols-outlined text-[18px]">terminal</span>
+          </button>
+        </td>
+      `;
+      tableBody.insertBefore(newRow, tableBody.firstChild);
+    }, 800);
+  };
+
+  window.triggerSimulatedFailure = function() {
+    const banner = document.getElementById('triggerStatusBanner');
+    banner.className = "mt-4 p-3.5 rounded-xl border-2 border-black font-mono text-xs font-bold bg-error-container text-black flex items-center justify-between neo-shadow-sm";
+    banner.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-error text-[20px]">error</span>
+        <span><strong>Simulated Error Handled:</strong> AI Provider 504 Timeout. n8n safely logged failure status to Bubble and aborted email send.</span>
+      </div>
+      <button type="button" onclick="window.retryExecution('AUTH-4089')" class="px-2.5 py-1 bg-black text-white rounded font-headline-sm text-xs font-bold neo-shadow-sm hover:bg-gray-800">Retry Now</button>
+    `;
+    banner.classList.remove('hidden');
+  };
+
+  window.retryExecution = function(id) {
+    alert(`Retrying n8n orchestration node for Author ID: ${id} with fallback API provider...`);
+    window.runMockExecution();
+  };
+
+  window.viewPayloadModal = function(id, mode) {
+    const modal = document.getElementById('payloadModal');
+    const title = document.getElementById('modalTitle');
+    const code = document.getElementById('modalJsonContent');
+    const badge = document.getElementById('modalStatusBadge');
+
+    if (mode === 'error') {
+      title.textContent = `Diagnostic Trace: Error on ${id}`;
+      badge.innerHTML = `<span class="text-error font-bold font-mono">HTTP 504 Timeout — Caught by n8n Error Node</span>`;
+      code.textContent = JSON.stringify({
+        "workflow_id": "wf_bookleaf_royalty_gen_v4",
+        "execution_id": "exec_8839102",
+        "author_id": id,
+        "error": {
+          "node": "AI Prompt Processor",
+          "message": "Gateway Timeout: upstream Anthropic API exceeded 5000ms threshold",
+          "code": "ETIMEDOUT",
+          "handled_gracefully": true
+        },
+        "bubble_callback": {
+          "status": "Failed",
+          "logged_to_bubble_table": "Notification_Log",
+          "notified_admin": true,
+          "timestamp": new Date().toISOString()
+        }
+      }, null, 2);
+    } else if (mode === 'dedupe') {
+      title.textContent = `Idempotency Inspector: ${id}`;
+      badge.innerHTML = `<span class="text-black font-bold font-mono">De-duplicated / Idempotency Cache Valid</span>`;
+      code.textContent = JSON.stringify({
+        "author_id": id,
+        "idempotency_key": `idemp_q3_${id}_f7192`,
+        "previous_execution_id": "exec_8839090",
+        "action": "DE_DUPLICATE_DROP",
+        "reason": "Duplicate trigger received within 15m window.",
+        "author_alerted": false
+      }, null, 2);
+    } else {
+      title.textContent = `Payload Verification: ${id}`;
+      badge.innerHTML = `<span class="text-emerald-700 font-bold font-mono">Workflow Passed (200 OK)</span>`;
+      code.textContent = JSON.stringify({
+        "execution_id": "exec_8839211",
+        "author_id": id,
+        "author_name": "Marcus Vance",
+        "royalty_summary": {
+          "period": "Q3 2024",
+          "total_earned": 22400.00,
+          "total_paid": 10000.00,
+          "balance_pending": 12400.00,
+          "next_cycle_date": "2024-11-15",
+          "production_notes": "The Cartographer's Dream in proofing with Epitome Books."
+        },
+        "prompt_compliance": {
+          "tone": "Warm, Authoritative Editorial",
+          "knowledge_base_checked": true,
+          "rule_45_day_cycle_included": true
+        },
+        "dispatch": {
+          "smtp_transport": "postmark_secure",
+          "message_id": "msg_88491823901",
+          "status": "delivered"
+        },
+        "bubble_ack": {
+          "notification_status": "Success",
+          "timestamp": new Date().toISOString()
+        }
+      }, null, 2);
+    }
+
+    modal.classList.remove('hidden');
+  };
+
+  window.closePayloadModal = function() {
+    document.getElementById('payloadModal').classList.add('hidden');
+  };
+
+  window.clearMockLogs = function() {
+    document.getElementById('logTableBody').innerHTML = `
+      <tr class="h-16 text-center text-secondary">
+        <td colspan="8" class="font-mono text-xs py-6">No filtered records. Click "Poll Webhook Logs" to refresh live stream.</td>
+      </tr>
+    `;
+  };
+
+  document.getElementById('statusFilter').addEventListener('change', function(e) {
+    const val = e.target.value;
+    const rows = document.querySelectorAll('#logTableBody tr[data-status]');
+    rows.forEach(r => {
+      if (val === 'all') {
+        r.style.display = '';
+      } else if (r.getAttribute('data-status') === val) {
+        r.style.display = '';
+      } else {
+        r.style.display = 'none';
+      }
+    });
+  });
+
+  document.getElementById('refreshPipelineBtn').addEventListener('click', function() {
+    const orig = this.innerHTML;
+    this.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Syncing...</span>`;
+    setTimeout(() => {
+      this.innerHTML = orig;
+    }, 400);
+  });
+</script>
+</body></html>

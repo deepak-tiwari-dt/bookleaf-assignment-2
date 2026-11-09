@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="en"><head>
+<title>BookLeaf | Admin Operations</title>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..600&amp;family=Space+Grotesk:wght@500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#00686f",
+            "surface-tint": "#536600",
+            "primary-container": "#d4ff00",
+            "secondary": "#006970",
+            "on-surface-variant": "#444932",
+            "on-primary-container": "#171e00",
+            "surface-dim": "#dcd9d9",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c5c9ac",
+            "secondary-container": "#00eefc",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#f6f3f2",
+            "background": "#fcf9f8",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2e1",
+            "secondary-fixed": "#7df4ff",
+            "on-primary-fixed": "#171e00",
+            "surface-container-high": "#ebe7e7",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#caf300",
+            "on-background": "#1c1b1b",
+            "primary": "#536600",
+            "tertiary-fixed": "#ffd9dc",
+            "inverse-primary": "#b0d500",
+            "secondary-fixed-dim": "#00dbe9",
+            "on-secondary-fixed": "#002022",
+            "on-tertiary-fixed-variant": "#910031",
+            "surface-bright": "#fcf9f8",
+            "tertiary-fixed-dim": "#ffb2ba",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e5e2e1",
+            "inverse-surface": "#121212",
+            "on-secondary-fixed-variant": "#004f54",
+            "tertiary": "#b71945",
+            "inverse-on-surface": "#f3f0ef",
+            "outline": "#757a60",
+            "on-tertiary-fixed": "#400011",
+            "surface-container": "#f0edec",
+            "on-secondary": "#ffffff",
+            "on-surface": "#121212",
+            "error": "#ba1a1a",
+            "tertiary-container": "#ffe9ea",
+            "on-tertiary-container": "#ca2a52",
+            "on-primary-fixed-variant": "#3e4c00",
+            "error-container": "#ffdad6",
+            "surface": "#fcf9f8",
+            "primary-fixed-dim": "#b0d500",
+            // Neo-brutalist pop tokens
+            "neo-black": "#121212",
+            "neo-lime": "#d4ff00",
+            "neo-cyan": "#00eefc",
+            "neo-pink": "#ff3864",
+            "neo-purple": "#a855f7",
+            "neo-yellow": "#ffe600",
+            "neo-lavender": "#e9d5ff",
+            "neo-cream": "#fffef5"
+          },
+          borderRadius: {
+            "DEFAULT": "0.75rem",
+            "lg": "1.25rem",
+            "xl": "1.75rem",
+            "2xl": "2rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-xl": "2.5rem",
+            "margin-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter-sm": "1rem",
+            "space-lg": "1.5rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem"
+          },
+          fontFamily: {
+            "body-md": ["DM Sans", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "label-lg": ["Space Grotesk", "sans-serif"],
+            "label-md": ["Space Grotesk", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #f7f5ed;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    .neo-shadow {
+      box-shadow: 3px 3px 0px #121212;
+    }
+    .neo-shadow-lg {
+      box-shadow: 5px 5px 0px #121212;
+    }
+    .neo-shadow-sm {
+      box-shadow: 2px 2px 0px #121212;
+    }
+    .neo-border {
+      border: 2px solid #121212;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-[#faf8f2] font-body-md text-neo-black antialiased selection:bg-neo-lime selection:text-neo-black">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#fffef7] border-b-2 border-neo-black h-16">
+<div class="h-full px-5 flex items-center justify-between gap-4">
+<!-- Left: Logo & Portal Badges -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-neo-lime border-2 border-neo-black neo-shadow-sm flex items-center justify-center font-headline-lg font-bold text-lg rotate-[-3deg]">
+            🌿⚡
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-lg text-2xl font-bold tracking-tight text-neo-black flex items-center gap-1.5 leading-none">
+              BookLeaf<span class="text-xs bg-neo-black text-neo-lime px-1.5 py-0.5 rounded font-mono font-bold tracking-wider">CREATOR OS</span>
+</span>
+</div>
+</div>
+<div class="hidden md:flex items-center p-1 bg-surface-container border-2 border-neo-black rounded-full neo-shadow-sm">
+<button class="px-3 py-1 rounded-full bg-neo-lime text-neo-black font-label-md font-bold text-xs uppercase tracking-wide border border-neo-black" type="button">
+            ⚡ Admin Console
+          </button>
+<a href="../author/" class="px-3 py-1 rounded-full text-on-surface font-label-md font-semibold text-xs hover:text-neo-pink transition-colors">
+            ✨ Author Portal
+          </a>
+</div>
+</div>
+<!-- Center: Neo Search Input -->
+<div class="flex-1 max-w-md hidden lg:flex items-center relative">
+<span class="material-symbols-outlined absolute left-3.5 text-neo-black text-[20px]">search</span>
+<input class="w-full h-10 pl-10 pr-16 bg-[#ffffff] border-2 border-neo-black rounded-full text-neo-black placeholder:text-neutral-500 font-label-md text-xs font-medium focus:outline-none focus:ring-0 focus:bg-white neo-shadow-sm transition-all" placeholder="Search authors, ISBN, catalog drops..." type="text">
+<div class="absolute right-3 flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-neo-black text-neo-lime font-mono text-[10px] font-bold">
+<span>⌘K</span>
+</div>
+</div>
+<!-- Right: n8n live status & Ops profile -->
+<div class="flex items-center gap-3">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-neo-lime border-2 border-neo-black rounded-full neo-shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+<span class="font-label-md text-xs font-bold uppercase tracking-wider text-neo-black">n8n Live &amp; Vibing 🚀</span>
+</div>
+<button class="relative w-10 h-10 rounded-xl bg-white border-2 border-neo-black neo-shadow-sm flex items-center justify-center text-neo-black hover:bg-neo-yellow transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute -top-1 -right-1 w-3 h-3 bg-neo-pink border-2 border-neo-black rounded-full"></span>
+</button>
+<div class="flex items-center gap-2 pl-2 bg-[#ffffff] border-2 border-neo-black rounded-full p-1 pr-3 neo-shadow-sm">
+<img alt="Sarah Jenkins" class="w-8 h-8 rounded-full object-cover border-2 border-neo-black" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA51K4f3b6Dg71k5u4HuItZbVmPY0dtY62ju3X6V4WtdQWRu6MQw_Lpk8_UbZ940HxdxCWgpGm4lQjf3gxGtQxTytn0NW7Bs77B36j6JvCXJgYrZEDIebyOFpAjMrP55vxTIoHqprdngoH05xS9dMxAADO5fVqLynQf8LlfZsiDZpbAGp-kkuT6-SGsVSIwseHC8s1xBY14kRyMK_Fay8LqZ0Xg_LIdswU2JVNdpGn-">
+<div class="hidden xl:flex flex-col text-left leading-none">
+<span class="font-headline-sm text-xs font-bold text-neo-black">Sarah Jenkins</span>
+<span class="font-mono text-[10px] text-neutral-600 font-semibold">Ops Lead 💫</span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Left Sidebar Navigation -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 bg-[#fffef7] border-r-2 border-neo-black z-40 flex flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="px-2">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-600 bg-neo-lavender px-2 py-0.5 rounded-full border border-neo-black">
+          ⚡ PUBLISHING OPS
+        </span>
+</div>
+<nav class="flex flex-col gap-2 font-headline-sm font-bold text-xs" data-active-classes="bg-neo-lime border-2 border-neo-black neo-shadow-sm text-neo-black">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-neo-lime border-2 border-neo-black neo-shadow-sm text-neo-black transition-all" data-path="overview-authors" href="../admin/">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Overview &amp; Authors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-neo-cyan/20 border-2 border-transparent hover:border-neo-black text-neo-black transition-all" data-path="book-catalog-print-partners" href="../author/">
+<span class="material-symbols-outlined text-[20px]">auto_stories</span>
+<span>Book Catalog &amp; Drops</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-neo-yellow/30 border-2 border-transparent hover:border-neo-black text-neo-black transition-all" data-path="royalty-engine-payouts" href="../author/">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Royalty Engine 💸</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-neo-lavender border-2 border-transparent hover:border-neo-black text-neo-black transition-all" data-path="n8n-automation-logs" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span>n8n Webhook Matrix</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-100 border-2 border-transparent hover:border-neo-black text-neo-black transition-all" data-path="documentation-architecture" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span>Bubble Specs &amp; Flow</span>
+</a>
+</nav>
+</div>
+<!-- Environment sticker badge -->
+<div class="p-3 bg-neo-cyan/30 border-2 border-neo-black rounded-2xl neo-shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between font-mono text-[10px] font-bold">
+<span class="uppercase">Cluster</span>
+<span class="bg-neo-black text-white px-1.5 py-0.5 rounded">PROD-US-E1</span>
+</div>
+<div class="font-headline-sm text-xs font-bold text-neo-black">BookLeaf Engine v2.4.9</div>
+<div class="font-mono text-[10px] text-neutral-600">● 100% Deterministic Sync</div>
+</div>
+</aside>
+<!-- Main Work Area -->
+<div class="pl-64">
+<main class="relative pt-16 min-h-[calc(100vh-4rem)] w-full px-6 py-6 pb-16">
+<div class="flex flex-col w-full gap-6">
+<!-- Top Header Banner / Quick Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-5 bg-[#ffffff] border-2 border-neo-black rounded-2xl neo-shadow">
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2.5 py-0.5 rounded-full bg-neo-lavender border border-neo-black font-mono text-[11px] font-bold uppercase tracking-wider text-neo-black">
+                SECTION A3 · OPS MISSION CONTROL
+              </span>
+<span class="px-2.5 py-0.5 rounded-full bg-neo-yellow border border-neo-black font-mono text-[11px] font-bold text-neo-black">
+                ✨ REAL-TIME RECON
+              </span>
+</div>
+<h1 class="font-headline-lg text-3xl md:text-4xl font-extrabold text-neo-black tracking-tight mt-1">
+              Author Overview &amp; Royalty Engine
+            </h1>
+<p class="font-body-md text-sm text-neutral-700 max-w-3xl mt-1">
+              Deterministic print royalty calculator, live retail ledger reconciliations, and instant n8n AI webhook pipelines with idempotency keys.
+            </p>
+</div>
+<!-- Buttons -->
+<div class="flex flex-wrap items-center gap-3">
+<button class="h-10 px-4 rounded-xl bg-white border-2 border-neo-black neo-shadow-sm hover:translate-x-[1px] hover:translate-y-[1px] font-headline-sm text-xs font-bold flex items-center gap-2 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span>Export CSV</span>
+</button>
+<button class="h-10 px-4 rounded-xl bg-neo-lime border-2 border-neo-black neo-shadow hover:translate-x-[1px] hover:translate-y-[1px] font-headline-sm text-xs font-extrabold flex items-center gap-2 group transition-transform" id="bulk-trigger-btn" type="button">
+<span class="text-base group-hover:rotate-12 transition-transform">⚡</span>
+<span>Bulk Trigger Summaries</span>
+<span class="bg-neo-black text-neo-lime px-2 py-0.5 rounded-full font-mono text-[10px] font-bold">3 PENDING</span>
+</button>
+</div>
+</div>
+<!-- Neo-Brutalist Bento Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Total Active Authors -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-600">Active Creators</span>
+<span class="w-8 h-8 rounded-lg bg-neo-lavender border border-neo-black flex items-center justify-center font-bold">👥</span>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<span class="font-headline-lg text-4xl font-extrabold text-neo-black">10</span>
+<span class="font-mono text-[11px] font-bold bg-neutral-100 border border-neo-black px-2 py-0.5 rounded-full">POOL</span>
+</div>
+<div class="mt-2 pt-2 border-t border-dashed border-neutral-300 font-label-md text-xs font-medium text-neutral-700 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>8 retail ISBN ready</span>
+</div>
+</div>
+<!-- Active Catalog -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-600">Active Titles</span>
+<span class="w-8 h-8 rounded-lg bg-neo-cyan border border-neo-black flex items-center justify-center font-bold">📚</span>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<span class="font-headline-lg text-4xl font-extrabold text-neo-black">18</span>
+<span class="font-mono text-[11px] font-bold bg-neo-cyan/30 border border-neo-black px-2 py-0.5 rounded-full">DROPS</span>
+</div>
+<div class="mt-2 pt-2 border-t border-dashed border-neutral-300 font-label-md text-xs font-medium text-neutral-700 flex items-center gap-1.5">
+<span class="font-bold text-neo-black">17 live</span>
+<span>· 1 proofing</span>
+</div>
+</div>
+<!-- Pending Royalty Pool -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-600">Pending Royalties</span>
+<span class="w-8 h-8 rounded-lg bg-neo-yellow border border-neo-black flex items-center justify-center font-bold">💸</span>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<span class="font-headline-lg text-2xl lg:text-3xl font-extrabold text-neo-black">$28,450</span>
+<span class="font-mono text-[10px] font-bold bg-neo-yellow border border-neo-black px-1.5 py-0.5 rounded">Q3 BAG</span>
+</div>
+<div class="mt-2 pt-2 border-t border-dashed border-neutral-300 font-label-md text-xs font-medium text-neutral-700">
+              Reconciliation active
+            </div>
+</div>
+<!-- Overdue Action Card (Vibrant Pink Brutalist Alert) -->
+<div class="bg-neo-pink/20 border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-extrabold uppercase tracking-wider text-neo-pink">Overdue Alert 🚨</span>
+<span class="w-8 h-8 rounded-lg bg-neo-pink text-white border border-neo-black flex items-center justify-center font-bold text-sm">!</span>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<span class="font-headline-lg text-2xl font-black text-neo-black">2 Authors</span>
+<span class="font-mono text-[10px] font-extrabold bg-neo-pink text-white px-2 py-0.5 rounded-full border border-neo-black">&gt;90 DAYS</span>
+</div>
+<div class="mt-2 pt-2 border-t border-dashed border-neo-pink/50 font-label-md text-xs font-bold text-neo-pink">
+              $12,400.00 critical flag
+            </div>
+</div>
+<!-- n8n Integration Pulse -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-600">n8n Matrix</span>
+<span class="w-8 h-8 rounded-lg bg-neo-lime border border-neo-black flex items-center justify-center font-bold">⚡</span>
+</div>
+<div class="mt-3 flex items-baseline justify-between">
+<span class="font-headline-lg text-xl font-bold text-neo-black">Connected</span>
+<span class="font-mono text-[11px] font-bold text-emerald-700 bg-emerald-100 border border-emerald-400 px-1.5 py-0.5 rounded">142ms</span>
+</div>
+<div class="mt-2 pt-2 border-t border-dashed border-neutral-300 font-mono text-[10px] text-neutral-600 flex items-center justify-between">
+<span>#wf-roy-908</span>
+<span class="font-bold text-neo-black">99.98% OK</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid: Ledger & Detail Drawer -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<!-- Primary Authors Ledger (8 Columns) -->
+<div class="xl:col-span-8 flex flex-col gap-6">
+<!-- Filter Strip Neo-Brutalist -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-3 neo-shadow flex flex-col md:flex-row items-center justify-between gap-3">
+<!-- Search Input -->
+<div class="relative w-full md:w-72">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-neutral-500 text-[18px]">search</span>
+<input class="w-full h-9 pl-9 pr-3 bg-neutral-50 border-2 border-neo-black rounded-xl text-neo-black placeholder:text-neutral-500 font-label-md text-xs focus:outline-none focus:bg-white" id="author-search" placeholder="Filter authors, email or ISBN..." type="text">
+</div>
+<!-- Filter Chips -->
+<div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+<button class="px-3 py-1.5 rounded-xl bg-neo-black text-neo-lime font-mono text-[11px] font-bold border-2 border-neo-black neo-shadow-sm whitespace-nowrap">All (10)</button>
+<button class="px-3 py-1.5 rounded-xl bg-white hover:bg-neo-yellow/30 text-neo-black font-mono text-[11px] font-bold border-2 border-neo-black neo-shadow-sm whitespace-nowrap">Pending (3)</button>
+<button class="px-3 py-1.5 rounded-xl bg-neo-pink/20 hover:bg-neo-pink text-neo-black hover:text-white font-mono text-[11px] font-bold border-2 border-neo-black neo-shadow-sm whitespace-nowrap">🚨 Overdue (2)</button>
+<button class="px-3 py-1.5 rounded-xl bg-white hover:bg-emerald-100 text-neo-black font-mono text-[11px] font-bold border-2 border-neo-black neo-shadow-sm whitespace-nowrap">Settled (5)</button>
+<div class="relative">
+<select class="h-9 px-3 pr-7 bg-white border-2 border-neo-black rounded-xl text-neo-black font-mono text-[11px] font-bold appearance-none cursor-pointer focus:outline-none neo-shadow-sm">
+<option>All Cities</option>
+<option>Mumbai</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>London</option>
+<option>Kolkata</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-neo-black text-[14px] pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Authors Table with Bold Borders & High Contrast -->
+<div class="bg-white border-2 border-neo-black rounded-2xl neo-shadow overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#faf8f2] border-b-2 border-neo-black font-mono text-[11px] font-black uppercase tracking-wider text-neo-black">
+<th class="py-3 px-4">Creator &amp; Base</th>
+<th class="py-3 px-3">Catalog</th>
+<th class="py-3 px-3 text-right">Earned</th>
+<th class="py-3 px-3 text-right">Disbursed</th>
+<th class="py-3 px-3 text-right">Pending</th>
+<th class="py-3 px-4">Payout Status</th>
+<th class="py-3 px-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-2 divide-neutral-200 font-label-md text-xs">
+<!-- Author 1: Dr. Aarav Sharma -->
+<tr class="hover:bg-neo-lime/10 transition-colors group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-xl object-cover border-2 border-neo-black neo-shadow-sm" data-alt="Portrait photo of Dr. Aarav Sharma" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Cu4zx4CT_pWc7fcisLm2eF_5e__5TwJT3G5I4mXU9mpy2nPU1Jt0c9y3d64-06aMDqsnvi6X9Cs-9Q9FxedNEyDdzinlTLlTYrKaH5_h3oUU1Lv-se8sDVVmujk_PhdmbwgEZk8TiqN9lOiOQQfGeTzoKKgZJxEKQBPJff9MYLCsbJPhswYYYWUCDey1BGtt_GRwRUjseyKF5Qa7439fY7NEi31OqXN1kXAf-4FR">
+<div>
+<div class="font-headline-sm font-bold text-neo-black flex items-center gap-1.5">
+<span>Dr. Aarav Sharma</span>
+<span class="px-1.5 py-0.2 rounded bg-neo-lime border border-neo-black text-[9px] font-mono font-bold">VERIFIED</span>
+</div>
+<div class="font-body-md text-[11px] text-neutral-600 flex items-center gap-1.5 mt-0.5">
+<span>aarav.sharma@lituniv.org</span>
+<span>·</span>
+<span class="font-mono font-bold">Mumbai, IN</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-neutral-100 border border-neo-black font-mono text-[11px] font-bold">
+                          📖 3 Drops
+                        </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-neo-black">$14,200.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-600">$14,200.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-400">$0.00</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-mono text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                          Settled 100%
+                        </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="h-8 px-3 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm font-headline-sm text-xs font-bold hover:bg-neo-lime transition-all inline-flex items-center gap-1" type="button">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Author 2: Priya Nair -->
+<tr class="hover:bg-neo-yellow/10 transition-colors group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-xl object-cover border-2 border-neo-black neo-shadow-sm" data-alt="Portrait of Priya Nair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbWSX7BuqGr75iy8oZ8o_OOtV2LtSkMaLECvw9-QleykwHEqd0VUWkDs3TmkjtndkgLSiHhgmTUnAHyRuejebN7AfV6Jb04i_4K3b-I1PJeHEOkPab5XG2d_v1SS73Ub5hluAByVFSuq65APV_36m8I7Kaq9xnaW8BDAoJI1pbLKhYzci6bVQ2Fe2IXorX-kW_5d0JtISiuVNhd4XqgZMlnkcc76VncoT1DnAwIqqb">
+<div>
+<div class="font-headline-sm font-bold text-neo-black">Priya Nair</div>
+<div class="font-body-md text-[11px] text-neutral-600 flex items-center gap-1.5 mt-0.5">
+<span>p.nair@monsoonpress.in</span>
+<span>·</span>
+<span class="font-mono font-bold">Bangalore, IN</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-neutral-100 border border-neo-black font-mono text-[11px] font-bold">
+                          📖 2 Drops
+                        </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-neo-black">$8,500.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-600">$5,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-amber-700 bg-amber-50 px-1 rounded border border-amber-300">$3,500.00</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-600 text-amber-950 font-mono text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                          Cycle Q3 Pending
+                        </span>
+<div class="text-[10px] text-neutral-500 font-mono mt-0.5">28d since drop</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="h-8 px-3 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm font-headline-sm text-xs font-bold hover:bg-neo-yellow transition-all inline-flex items-center gap-1" type="button">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Author 3: Marcus Vance (CRITICAL FOCUS / SELECTED) -->
+<tr class="bg-neo-pink/15 border-l-4 border-l-neo-pink font-semibold">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-xl object-cover border-2 border-neo-black ring-2 ring-neo-pink neo-shadow-sm" data-alt="Portrait of Marcus Vance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvAJjvW3nyaYBJbJqaKrhiagAY2tYnqemERpdUhVcMkc_wjcxjJyGDjAi0o6ss1hIpRLFawdJodbCpCBnZ45giRMLH2IAJYuqEFikuo2xtm1guaJzf_-6HTkMDK61zcEym8F22DEN2a5beI7_AH_nncjlKegbqN0iY_K5Z3t0UzeDu_AMbshIPY4S89G_x6BiSGaQbXi1kPk-Ats9dBOpV8cavjNiulh3Is9i1-56N">
+<div>
+<div class="font-headline-sm font-bold text-neo-black flex items-center gap-1.5">
+<span>Marcus Vance</span>
+<span class="px-1.5 py-0.5 rounded bg-neo-pink text-white font-mono text-[9px] font-extrabold uppercase border border-neo-black">🚨 AUDIT</span>
+</div>
+<div class="font-body-md text-[11px] text-neutral-700 flex items-center gap-1.5 mt-0.5">
+<span>marcus.vance@vancemedia.co.uk</span>
+<span>·</span>
+<span class="font-mono font-bold">London, UK</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-neo-black font-mono text-[11px] font-bold">
+                          📖 2 Drops
+                        </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-neo-black">$22,400.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-700">$10,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-extrabold text-neo-pink bg-neo-pink/20 px-1 rounded border border-neo-pink">$12,400.00</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neo-pink text-white border border-neo-black font-mono text-[10px] font-black uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+                          94d Overdue
+                        </span>
+<div class="text-[10px] text-neo-pink font-mono font-bold mt-0.5">Zero Q2/Q3 payouts</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="h-8 px-3 rounded-lg bg-neo-black text-neo-lime border-2 border-neo-black neo-shadow-sm font-headline-sm text-xs font-bold inline-flex items-center gap-1" type="button">
+<span>Focus Rail</span>
+<span class="material-symbols-outlined text-[14px]">tune</span>
+</button>
+</td>
+</tr>
+<!-- Author 4: Ananya Roy -->
+<tr class="hover:bg-neutral-100 transition-colors group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-xl object-cover border-2 border-neo-black neo-shadow-sm" data-alt="Portrait photo of Ananya Roy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBspF9z8uOEKoSicIRA2FbMOcebduJuu5oEyf8sK6zPr_pklRXatM-vRiqXyc71srfoepikNVyn4CpgLiBIytisil9lC9kuW3hmgx26SRGmvyk893KiBaHTX7C6PZE4RlNMlFzu4WH8k3SXvaJ6dZw73A-a4jdUQDG7BFg0RlkjeHWB3vlUcOS_-mhm08Ugs62AEmJOyU1s1OJGp-UKlmCFA7qqS5_3KEz_JGnVKm6c">
+<div>
+<div class="font-headline-sm font-bold text-neo-black">Ananya Roy</div>
+<div class="font-body-md text-[11px] text-neutral-600 flex items-center gap-1.5 mt-0.5">
+<span>ananya.roy@litkolkata.org</span>
+<span>·</span>
+<span class="font-mono font-bold">Kolkata, IN</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-neo-lavender border border-neo-black font-mono text-[11px] font-bold">
+                          🖨️ Proofing (1)
+                        </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-400">$0.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-400">$0.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-400">$0.00</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-100 border border-neutral-400 text-neutral-700 font-mono text-[10px] font-bold uppercase">
+                          Press Proofing
+                        </span>
+<div class="text-[10px] text-neutral-500 font-mono mt-0.5">Partner: Repro India</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="h-8 px-3 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm font-headline-sm text-xs font-bold hover:bg-neutral-100 transition-all inline-flex items-center gap-1" type="button">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</td>
+</tr>
+<!-- Author 5: Vikram Sethi -->
+<tr class="hover:bg-neo-yellow/10 transition-colors group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-xl object-cover border-2 border-neo-black neo-shadow-sm" data-alt="Portrait of Vikram Sethi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACzjvOxPjFWN_nELEb2nIy6Yd3ZTzxbB5Y1v73a1sfRMFpG7Wp3VnDz4xBTCyGjIE44AXlZAnXnP2my1RmzybRZCunUwvxGAxgjkxbClW_KeLdXWuO6xQ4p1WcaJQGbq09uoHCuoBTriF6CLJi44q51aEK8bEsXF-rhrTdPZ2OGmsiXY0VcqZEJUblm7oWDUP346YqKqqJ9Q4iCFBVhcxO9OGntzvM7biEEiMOBK_N">
+<div>
+<div class="font-headline-sm font-bold text-neo-black">Vikram Sethi</div>
+<div class="font-body-md text-[11px] text-neutral-600 flex items-center gap-1.5 mt-0.5">
+<span>v.sethi@delhithought.com</span>
+<span>·</span>
+<span class="font-mono font-bold">Delhi, IN</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-neutral-100 border border-neo-black font-mono text-[11px] font-bold">
+                          📖 4 Drops
+                        </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-neo-black">$31,100.00</td>
+<td class="py-3.5 px-3 text-right font-mono text-neutral-600">$24,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-amber-700 bg-amber-50 px-1 rounded border border-amber-300">$7,100.00</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-600 text-amber-950 font-mono text-[10px] font-bold uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                          Cycle Q3 Pending
+                        </span>
+<div class="text-[10px] text-neutral-500 font-mono mt-0.5">41d since payout</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="h-8 px-3 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm font-headline-sm text-xs font-bold hover:bg-neo-yellow transition-all inline-flex items-center gap-1" type="button">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-4 py-3 bg-[#faf8f2] border-t-2 border-neo-black flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs">
+<div class="flex items-center gap-2">
+<span class="text-neutral-700">Displaying 5 of 10 creators in pipeline</span>
+<span class="bg-neo-black text-white px-2 py-0.5 rounded text-[10px]">bookleaf_sample_data.json</span>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm text-neo-black font-bold">Prev</button>
+<button class="px-2.5 py-1 rounded-lg bg-neo-lime border-2 border-neo-black neo-shadow-sm text-neo-black font-black">1</button>
+<button class="px-2.5 py-1 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm text-neo-black font-bold">2</button>
+<button class="px-2.5 py-1 rounded-lg bg-white border-2 border-neo-black neo-shadow-sm text-neo-black font-bold">Next</button>
+</div>
+</div>
+</div>
+<!-- Execution Logs / n8n Stream Streamer -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-5 neo-shadow flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-xl">📡</span>
+<h3 class="font-headline-sm text-base font-extrabold text-neo-black tracking-tight">n8n Automation Dispatch Logs</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-500 font-mono text-[10px] font-bold text-emerald-900 uppercase">
+                    Sync Active 🟢
+                  </span>
+<button class="p-1 rounded-lg border border-neo-black bg-white hover:bg-neutral-100">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Stream Rows -->
+<div class="flex flex-col divide-y-2 divide-neutral-100 font-label-md text-xs">
+<div class="py-2.5 flex items-center justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-neo-black"></span>
+<span class="font-headline-sm font-bold text-neo-black">Dr. Aarav Sharma</span>
+<span class="text-neutral-600 font-body-md">· Q2 Payout Statement with Tax Invoice generated</span>
+</div>
+<div class="flex items-center gap-2 font-mono text-[11px]">
+<span class="bg-emerald-200 border border-neo-black text-neo-black px-2 py-0.5 rounded font-bold">SUCCESS</span>
+<span class="text-neutral-500">10:14 AM</span>
+</div>
+</div>
+<div class="py-2.5 flex items-center justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 border border-neo-black"></span>
+<span class="font-headline-sm font-bold text-neo-black">Vikram Sethi</span>
+<span class="text-neutral-600 font-body-md">· Quarterly Sales Ledger sync pushed to author portal</span>
+</div>
+<div class="flex items-center gap-2 font-mono text-[11px]">
+<span class="bg-emerald-200 border border-neo-black text-neo-black px-2 py-0.5 rounded font-bold">SUCCESS</span>
+<span class="text-neutral-500">Yesterday, 18:40 PM</span>
+</div>
+</div>
+<div class="py-2.5 flex items-center justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-neo-pink border border-neo-black"></span>
+<span class="font-headline-sm font-bold text-neo-pink">Marcus Vance</span>
+<span class="text-neutral-700 font-body-md">· Payout Dispatch Flagged: Bank mandate re-verification required</span>
+</div>
+<div class="flex items-center gap-2 font-mono text-[11px]">
+<span class="bg-neo-pink text-white border border-neo-black px-2 py-0.5 rounded font-extrabold">RETRY LOCK</span>
+<span class="text-neutral-500">12 Oct, 14:02 PM</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side Rail: Author Detail & Webhook Trigger Panel (4 Columns) -->
+<div class="xl:col-span-4 flex flex-col gap-6">
+<!-- Marcus Vance Focused Drawer -->
+<div class="bg-white border-2 border-neo-black rounded-2xl p-5 neo-shadow flex flex-col gap-4 relative overflow-hidden">
+<!-- Creator Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<img class="w-14 h-14 rounded-2xl object-cover border-2 border-neo-black neo-shadow-sm ring-2 ring-neo-pink" data-alt="Marcus Vance portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmmn_JiZvrZ3M5_9gQdJGxQok8NcrQjhpqFjcfDCTMb0DrMfqbsVBsImzX-tSiSvGFrNm48ezeUXnsqeKASaR8yf8hoZxpruN0URSf1f7mfxLvC4EPi3HufEvWEBsGhltHw1XOlfwwgvK1GB50TA3KG276VHbLKPNcvqQPBKO4yTQFcYcIdibYrzuXBnA-GLT8Vmk5J0eURc53TuxGsi9S3Nkjf8tUQoU814WQPzIV">
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-lg text-lg font-black text-neo-black">Marcus Vance</h3>
+<span class="px-1.5 py-0.5 rounded bg-neo-black text-neo-lime font-mono text-[9px] font-bold">UK-8921</span>
+</div>
+<p class="font-body-md text-xs text-neutral-600">London, United Kingdom 🇬🇧</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-neo-pink text-white border-2 border-neo-black font-mono text-[10px] font-black uppercase tracking-wider neo-shadow-sm">
+                  94D OVERDUE
+                </span>
+</div>
+<!-- Security Rule Box -->
+<div class="p-2.5 bg-neutral-100 border-2 border-neo-black rounded-xl flex items-center justify-between font-mono text-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-neo-black">verified_user</span>
+<span class="text-neutral-700 font-semibold">Bubble Privacy:</span>
+</div>
+<span class="bg-neo-black text-neo-lime px-2 py-0.5 rounded font-bold text-[10px]">Admin-All-Data</span>
+</div>
+<!-- Financial Ledger Tile Neo-Brutalist -->
+<div class="p-4 bg-neo-cream border-2 border-neo-black rounded-2xl flex flex-col gap-3">
+<span class="font-mono text-[10px] font-black uppercase tracking-wider text-neutral-600">
+                  ⚡ CALCULATED ROYALTY BALANCE
+                </span>
+<div class="grid grid-cols-3 gap-2">
+<div class="p-2 rounded-xl bg-white border border-neo-black neo-shadow-sm text-center">
+<span class="font-mono text-[10px] text-neutral-500 block uppercase">Earned</span>
+<span class="font-mono text-sm font-black text-neo-black">$22,400</span>
+</div>
+<div class="p-2 rounded-xl bg-white border border-neo-black neo-shadow-sm text-center">
+<span class="font-mono text-[10px] text-neutral-500 block uppercase">Paid</span>
+<span class="font-mono text-sm font-bold text-neutral-700">$10,000</span>
+</div>
+<div class="p-2 rounded-xl bg-neo-pink/20 border border-neo-black neo-shadow-sm text-center">
+<span class="font-mono text-[10px] text-neo-pink font-black block uppercase">Pending</span>
+<span class="font-mono text-sm font-black text-neo-pink">$12,400</span>
+</div>
+</div>
+<div class="text-[11px] font-mono text-neutral-700 flex justify-between border-t border-dashed border-neutral-300 pt-2">
+<span>Last Payout:</span>
+<span class="text-neo-pink font-bold">None since Q1 (14 Jul 2024)</span>
+</div>
+<div class="text-[11px] font-mono text-neutral-700 flex justify-between">
+<span>Cadence:</span>
+<span class="font-bold text-neo-black">Bi-Monthly (Delinquent)</span>
+</div>
+</div>
+<!-- Linked Catalog -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] font-bold uppercase tracking-wider text-neutral-700">Linked Catalog (2)</span>
+<span class="font-mono text-[10px] bg-neo-lavender px-2 py-0.5 rounded border border-neo-black font-bold">Print: Epitome</span>
+</div>
+<!-- Book 1 -->
+<div class="p-2.5 bg-[#faf8f2] border-2 border-neo-black rounded-xl neo-shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-14 rounded-lg object-cover border border-neo-black shrink-0" data-alt="Cover artwork of The Fractured Tide" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1OpIc6lSoGMPzTmdPvQbY5W7iqW95NCrfcbWtkaZUm0IEh29iNVt9YxRM6JLI5jIfU4o5qB0zbAjnKcUwFV5xXVtxlbVd7LDMEWtKpnHv95j0-NeC0YfSk3SfQ4sWUHCC5EKyVRffbveDddikMZ950SgQeVKbHJsfZtPyDlFE4qt1zFqXqKYImMqCJsdZQfA_-k1bsEHLE8cicduA7QjubA5uNJlq-6DjZYA9Ww0X">
+<div class="min-w-0">
+<h4 class="font-headline-sm text-xs font-bold text-neo-black truncate">The Fractured Tide</h4>
+<p class="font-mono text-[10px] text-neutral-500 truncate">ISBN 978-0-141-98721-0</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-mono text-[9px] bg-white border border-neo-black px-1.5 rounded font-bold">1,820 Sold</span>
+<span class="font-mono text-[9px] bg-neo-yellow border border-neo-black px-1.5 rounded font-extrabold">$7,400 Bal</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-neo-black">open_in_new</span>
+</div>
+<!-- Book 2 -->
+<div class="p-2.5 bg-[#faf8f2] border-2 border-neo-black rounded-xl neo-shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-14 rounded-lg object-cover border border-neo-black shrink-0" data-alt="Echoes of the Thames book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_NtsJfvnFXPZwx9hZyJ4Sc1BaZVwkMhQFHz9aVqc08oDxt99OsJTiRIxMqjRdD-iIjUtRj1kLekK2oaDTI2e_M3lNogPNxgg2Ag4Bd-8uFaNzTCM5lgrHq9S0DlLydx1jlDjip0vAU9Ix1DMPj-8-piaDhboRrcW5-nsHCHUwFA1JstoQwapLhP8SdZlk4pVwUdd7fjj3BBeckou_VWZJdDSpwMtU_sZ5821ilkHR">
+<div class="min-w-0">
+<h4 class="font-headline-sm text-xs font-bold text-neo-black truncate">Echoes of the Thames</h4>
+<p class="font-mono text-[10px] text-neutral-500 truncate">ISBN 978-0-141-98834-7</p>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-mono text-[9px] bg-white border border-neo-black px-1.5 rounded font-bold">1,240 Sold</span>
+<span class="font-mono text-[9px] bg-neo-yellow border border-neo-black px-1.5 rounded font-extrabold">$5,000 Bal</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[16px] text-neo-black">open_in_new</span>
+</div>
+</div>
+<!-- n8n Automation Trigger Card: Electric Neo-Dark Synth Theme -->
+<div class="bg-neo-black text-white border-2 border-neo-black rounded-2xl p-4 neo-shadow flex flex-col gap-3 relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-lg">🤖</span>
+<span class="font-headline-sm text-xs font-black text-neo-lime uppercase tracking-wider">AI Webhook Trigger</span>
+</div>
+<span class="font-mono text-[10px] bg-white/10 text-neo-cyan px-2 py-0.5 rounded border border-white/20">POST /v1/webhook</span>
+</div>
+<p class="font-body-md text-xs text-neutral-300 leading-snug">
+                  Triggers n8n multi-step run: recalculates retail margins, drafts PDF schedules, crafts OpenAI recap, and pushes authenticated payload.
+                </p>
+<!-- Code Payload Snippet -->
+<div class="p-2.5 rounded-xl bg-[#09090b] border border-white/10 font-mono text-[10px] text-neutral-300 flex flex-col gap-1">
+<div class="flex justify-between">
+<span class="text-neo-cyan">"author_id":</span>
+<span class="text-neo-lime">"mv_lon_901"</span>
+</div>
+<div class="flex justify-between">
+<span class="text-neo-cyan">"pending_usd":</span>
+<span class="text-neo-lime">12400.00</span>
+</div>
+<div class="flex justify-between">
+<span class="text-neo-cyan">"idempotency_key":</span>
+<span class="text-white">"idemp_99a81e_2024"</span>
+</div>
+</div>
+<!-- Punchy Electric Action CTA -->
+<button class="w-full mt-1 h-11 px-4 rounded-xl bg-neo-lime text-neo-black border-2 border-neo-black neo-shadow hover:translate-x-[1px] hover:translate-y-[1px] font-headline-sm text-xs font-black flex items-center justify-center gap-2 transition-transform group" id="trigger-single-btn" type="button">
+<span class="text-base group-hover:scale-125 transition-transform">🚀</span>
+<span id="trigger-btn-label">Blast Royalty Summary [Trigger Webhook]</span>
+</button>
+<!-- Toast Alert -->
+<div class="hidden p-2 rounded-xl bg-emerald-950 border border-emerald-400 text-emerald-200 font-mono text-xs flex items-center gap-2" id="trigger-success-alert">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">verified</span>
+<span>n8n execution queued: #n8n-90182</span>
+</div>
+</div>
+<!-- Quick Action Pills -->
+<div class="flex items-center justify-between pt-1">
+<button class="font-mono text-xs font-bold text-neutral-700 hover:text-neo-black underline flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_document</span>
+<span>Edit Author Contract</span>
+</button>
+<button class="font-mono text-xs font-extrabold text-neo-pink hover:underline flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span>Mark For Audit</span>
+</button>
+</div>
+</div>
+<!-- Architecture Neo-Box Footnote -->
+<div class="p-4 bg-white border-2 border-neo-black rounded-2xl neo-shadow flex items-start gap-3">
+<div class="w-9 h-9 rounded-xl bg-neo-cyan border-2 border-neo-black flex items-center justify-center shrink-0 font-bold text-sm">
+                ⚙️
+              </div>
+<div>
+<h5 class="font-headline-sm text-xs font-black text-neo-black uppercase tracking-wide">
+                  Bubble.io &amp; n8n Unified Architecture
+                </h5>
+<p class="font-body-md text-xs text-neutral-600 mt-1 leading-relaxed">
+                  Persistent relational records: Authors → Books → Royalty Ledgers. Webhook dispatches use signed JWT payloads with author metadata for strict multitenant isolation.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Interactive Trigger Script -->
+<script>
+    (function initAdminTriggers() {
+      const singleTriggerBtn = document.getElementById('trigger-single-btn');
+      const triggerLabel = document.getElementById('trigger-btn-label');
+      const successAlert = document.getElementById('trigger-success-alert');
+      const bulkTriggerBtn = document.getElementById('bulk-trigger-btn');
+
+      if (singleTriggerBtn) {
+        singleTriggerBtn.addEventListener('click', function() {
+          triggerLabel.textContent = 'Calling n8n Webhook...';
+          singleTriggerBtn.classList.add('opacity-80', 'cursor-not-allowed');
+
+          setTimeout(() => {
+            triggerLabel.textContent = 'Summary Dispatched via n8n 🚀';
+            if (successAlert) {
+              successAlert.classList.remove('hidden');
+            }
+            setTimeout(() => {
+              triggerLabel.textContent = 'Blast Royalty Summary [Trigger Webhook]';
+              singleTriggerBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+            }, 4000);
+          }, 950);
+        });
+      }
+
+      if (bulkTriggerBtn) {
+        bulkTriggerBtn.addEventListener('click', function() {
+          const originalText = bulkTriggerBtn.innerHTML;
+          bulkTriggerBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Dispatching 3 Webhooks...';
+          bulkTriggerBtn.classList.add('opacity-75');
+
+          setTimeout(() => {
+            bulkTriggerBtn.innerHTML = '<span>⚡</span> All 3 Summaries Enqueued!';
+            setTimeout(() => {
+              bulkTriggerBtn.innerHTML = originalText;
+              bulkTriggerBtn.classList.remove('opacity-75');
+            }, 3000);
+          }, 1200);
+        });
+      }
+
+      // Live search filtering demonstration
+      const searchInput = document.getElementById('author-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const val = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll('tbody tr');
+          rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(val) ? '' : 'none';
+          });
+        });
+      }
+    })();
+  </script>
+</body></html>

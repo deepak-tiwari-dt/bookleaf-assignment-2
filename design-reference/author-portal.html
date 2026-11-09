@@ -1,0 +1,973 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="web_dashboard" name="shell-type">
+<title>Creator Hub // BookLeaf Author Portal</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&amp;family=Space+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html, body { margin:0; padding:0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-container": "#00686f",
+            "surface-tint": "#536600",
+            "primary-container": "#d4ff00",
+            "secondary": "#006970",
+            "on-surface-variant": "#444932",
+            "on-primary-container": "#5f7400",
+            "surface-dim": "#dcd9d9",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c5c9ac",
+            "secondary-container": "#00eefc",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#f6f3f2",
+            "background": "#fcf9f8",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2e1",
+            "secondary-fixed": "#7df4ff",
+            "on-primary-fixed": "#171e00",
+            "surface-container-high": "#ebe7e7",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#caf300",
+            "on-background": "#1c1b1b",
+            "primary": "#121212",
+            "tertiary-fixed": "#ffd9dc",
+            "inverse-primary": "#b0d500",
+            "secondary-fixed-dim": "#00dbe9",
+            "on-secondary-fixed": "#002022",
+            "on-tertiary-fixed-variant": "#910031",
+            "surface-bright": "#fcf9f8",
+            "tertiary-fixed-dim": "#ffb2ba",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e5e2e1",
+            "inverse-surface": "#313030",
+            "on-secondary-fixed-variant": "#004f54",
+            "tertiary": "#b71945",
+            "inverse-on-surface": "#f3f0ef",
+            "outline": "#757a60",
+            "on-tertiary-fixed": "#400011",
+            "surface-container": "#f0edec",
+            "on-secondary": "#ffffff",
+            "on-surface": "#1c1b1b",
+            "error": "#ba1a1a",
+            "tertiary-container": "#ffe9ea",
+            "on-tertiary-container": "#ca2a52",
+            "on-primary-fixed-variant": "#3e4c00",
+            "error-container": "#ffdad6",
+            "surface": "#f8f7f4",
+            "primary-fixed-dim": "#b0d500"
+          },
+          borderRadius: {
+            "DEFAULT": "0.75rem",
+            "lg": "1.25rem",
+            "xl": "1.75rem",
+            "2xl": "2rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-xl": "2.5rem",
+            "margin-sm": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter-sm": "1rem",
+            "space-lg": "1.5rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem"
+          },
+          fontFamily: {
+            "headline-xl": ["Space Grotesk", "sans-serif"],
+            "headline-lg": ["Space Grotesk", "sans-serif"],
+            "headline-md": ["Space Grotesk", "sans-serif"],
+            "headline-sm": ["Space Grotesk", "sans-serif"],
+            "label-lg": ["Space Grotesk", "sans-serif"],
+            "label-md": ["Space Grotesk", "sans-serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "body-lg": ["DM Sans", "sans-serif"],
+            "body-md": ["DM Sans", "sans-serif"],
+            "body-sm": ["DM Sans", "sans-serif"]
+          },
+          boxShadow: {
+            "neo-sm": "2px 2px 0px #121212",
+            "neo": "4px 4px 0px #121212",
+            "neo-lg": "6px 6px 0px #121212",
+            "neo-xl": "8px 8px 0px #121212"
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-[#d4ff00] selection:text-black">
+<!-- Top Navigation Header -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white border-b-2 border-[#121212] px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-lg bg-[#d4ff00] border-2 border-[#121212] shadow-neo-sm flex items-center justify-center font-headline-lg font-bold text-black text-xl leading-none">
+          B
+        </div>
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-xl font-bold tracking-tight text-black">BookLeaf</span>
+<span class="font-headline-sm text-xs font-semibold px-2 py-0.5 rounded-full bg-[#121212] text-[#d4ff00]">STUDIO</span>
+</div>
+</div>
+<!-- Segment Toggle -->
+<div class="hidden md:flex items-center bg-[#f0edec] p-1 rounded-full border-2 border-[#121212]">
+<a href="../admin/" class="px-3 py-1 rounded-full font-label-md text-xs text-neutral-600 hover:text-black transition-colors">
+          Admin Ops
+        </a>
+<button class="px-3.5 py-1 rounded-full bg-[#d4ff00] text-black font-label-md text-xs font-bold border-2 border-[#121212] shadow-neo-sm" type="button">
+          Author Portal ✨
+        </button>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="flex-1 max-w-md hidden lg:flex items-center relative mx-4">
+<span class="material-symbols-outlined absolute left-3.5 text-[#121212] text-[18px]">search</span>
+<input class="w-full h-10 pl-10 pr-16 bg-[#f6f3f2] rounded-full border-2 border-[#121212] text-sm font-body-md placeholder:text-neutral-500 focus:outline-none focus:bg-white focus:shadow-neo-sm transition-all" placeholder="Search drops, royalty batch, ISBN..." type="text">
+<div class="absolute right-3 flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-[#121212] text-[#d4ff00] font-headline-sm text-[10px] font-bold">
+<span>⌘K</span>
+</div>
+</div>
+<!-- User / n8n status -->
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#d4ff00]/25 border-2 border-[#121212] rounded-full shadow-neo-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-[#536600] animate-ping"></span>
+<span class="font-headline-sm text-[11px] font-bold tracking-wide uppercase text-black">n8n: SYNCED ⚡</span>
+</div>
+<button class="relative w-10 h-10 rounded-full border-2 border-[#121212] bg-white flex items-center justify-center hover:bg-[#d4ff00] transition-colors shadow-neo-sm" type="button">
+<span class="material-symbols-outlined text-[20px] text-black">notifications</span>
+<span class="absolute 1 top-0 right-0 w-3 h-3 bg-[#b71945] rounded-full border-2 border-[#121212]"></span>
+</button>
+<div class="flex items-center gap-2 pl-1">
+<div class="relative">
+<img alt="Profile" class="w-9 h-9 rounded-full border-2 border-[#121212] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA51K4f3b6Dg71k5u4HuItZbVmPY0dtY62ju3X6V4WtdQWRu6MQw_Lpk8_UbZ940HxdxCWgpGm4lQjf3gxGtQxTytn0NW7Bs77B36j6JvCXJgYrZEDIebyOFpAjMrP55vxTIoHqprdngoH05xS9dMxAADO5fVqLynQf8LlfZsiDZpbAGp-kkuT6-SGsVSIwseHC8s1xBY14kRyMK_Fay8LqZ0Xg_LIdswU2JVNdpGn-">
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#d4ff00] rounded-full border border-black"></span>
+</div>
+<div class="hidden xl:flex flex-col text-left leading-none">
+<span class="font-headline-sm text-xs font-bold text-black">Sarah J.</span>
+<span class="font-body-sm text-[11px] text-neutral-600">Ops Lead</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Left Sidebar Navigation -->
+<aside class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r-2 border-[#121212] z-40 flex flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="px-2 pt-1 flex items-center justify-between">
+<span class="font-headline-sm text-[11px] font-bold uppercase tracking-wider text-neutral-500">Creator Hub // Nav</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#d4ff00] border border-[#121212] text-black">PRO</span>
+</div>
+<nav class="flex flex-col gap-1.5">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 border-[#121212] bg-[#d4ff00] text-black font-headline-sm text-sm font-bold shadow-neo-sm transition-transform active:translate-x-0.5 active:translate-y-0.5" data-path="overview-authors" href="../author/">
+<span class="material-symbols-outlined text-[20px]">person_celebrate</span>
+<span>Overview &amp; Authors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 border-transparent hover:border-[#121212] hover:bg-[#f6f3f2] text-neutral-700 hover:text-black font-headline-sm text-sm font-semibold transition-all" data-path="book-catalog-print-partners" href="../author/">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span>Catalog &amp; Drops</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 border-transparent hover:border-[#121212] hover:bg-[#f6f3f2] text-neutral-700 hover:text-black font-headline-sm text-sm font-semibold transition-all" data-path="royalty-engine-payouts" href="../author/">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Royalty &amp; Payouts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 border-transparent hover:border-[#121212] hover:bg-[#f6f3f2] text-neutral-700 hover:text-black font-headline-sm text-sm font-semibold transition-all" data-path="n8n-automation-logs" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span>n8n Workflows</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl border-2 border-transparent hover:border-[#121212] hover:bg-[#f6f3f2] text-neutral-700 hover:text-black font-headline-sm text-sm font-semibold transition-all" data-path="documentation-architecture" href="../automation/">
+<span class="material-symbols-outlined text-[20px]">auto_stories</span>
+<span>Architecture Docs</span>
+</a>
+</nav>
+</div>
+<!-- Neo-Brutalist Env Widget -->
+<div class="p-3 bg-[#f0edec] rounded-xl border-2 border-[#121212] shadow-neo-sm">
+<div class="flex items-center justify-between text-[11px] font-headline-sm font-bold">
+<span class="text-neutral-600">CLUSTER</span>
+<span class="px-2 py-0.5 rounded bg-black text-[#d4ff00] text-[10px]">US-EAST-1</span>
+</div>
+<div class="mt-2 text-xs font-mono font-medium text-neutral-800">
+        BookLeaf Engine v2.4.9
+      </div>
+<div class="mt-1 flex items-center gap-1.5 text-[11px] text-[#536600] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-[#536600]"></span> All webhooks operational
+      </div>
+</div>
+</aside>
+<!-- Main Content Body -->
+<div class="pl-64">
+<main class="relative pt-16 min-h-[calc(100vh-4rem)] w-full px-8 py-8 bg-[#f8f7f4]">
+<div class="flex flex-col w-full gap-8 max-w-7xl mx-auto">
+<!-- Welcoming Energetic Creator Hero Banner -->
+<section class="relative overflow-hidden rounded-2xl bg-white border-2 border-[#121212] p-7 shadow-neo-lg">
+<!-- Background decorative badges/stickers -->
+<div class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-[#d4ff00]/30 border-2 border-dashed border-[#121212] pointer-events-none"></div>
+<div class="absolute right-40 -bottom-10 w-32 h-32 rounded-full bg-[#00eefc]/20 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<div class="flex items-start sm:items-center gap-5">
+<div class="relative shrink-0">
+<img class="w-20 h-20 rounded-2xl border-2 border-[#121212] object-cover shadow-neo" data-alt="Marcus Vance author portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4aqJqlCdpZPu9PR_VQ3DbNg-OahmtjNViHAolcEUroKYGMTx0uh5GzRlZO5sFGCIJsgNgvKiKejrgnXrClY2uyfo0j8eWZ9Eh7Gj5qxljPRu_9Rez-3iwU8SihiNwbdrF7CtoyCkNi2t9KJqgOxSo42NDnGQ9miuDQc8l1_dcz7OjXTkECGjZuDDTITfExgPUObppw3zkun7SvQkA0R_IX8anGBDys2TD9jQin7KW">
+<span class="absolute -bottom-1.5 -right-1.5 px-1.5 py-0.5 bg-[#d4ff00] text-black font-headline-sm text-[10px] font-extrabold rounded-full border-2 border-[#121212]">
+                  PRO ★
+                </span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="px-2.5 py-0.5 rounded-full bg-[#121212] text-white font-headline-sm text-xs font-bold tracking-wide">
+                    CREATOR HUB // LEDGER
+                  </span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#caf300] border border-[#121212] text-black font-headline-sm text-xs font-bold">
+                    ✓ Verified Author
+                  </span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#00eefc]/30 border border-[#121212] text-black font-headline-sm text-xs font-bold">
+                    #BL-AUTH-8821
+                  </span>
+</div>
+<h1 class="font-headline-xl text-3xl md:text-4xl font-extrabold text-black tracking-tight mt-2">
+                  Sup Marcus! ✨ Welcome back
+                </h1>
+<p class="font-body-md text-sm text-neutral-600 mt-1 flex flex-wrap items-center gap-2">
+<span>Author Account: <strong class="text-black font-mono">vance.marcus@presscraft.org</strong></span>
+<span class="text-neutral-400">•</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-headline-sm text-xs font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> W-9 Active (US-EIN verified)
+                  </span>
+</p>
+</div>
+</div>
+<!-- Header Action CTA Buttons -->
+<div class="flex items-center gap-3 self-start lg:self-auto flex-wrap">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-white text-black font-headline-sm text-xs font-bold rounded-xl border-2 border-[#121212] shadow-neo hover:bg-[#f6f3f2] hover:translate-x-0.5 hover:translate-y-0.5 transition-all" id="trigger-sync-btn" onclick="triggerAuthorStatementRefresh()" type="button">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span>Request Statement Refresh</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-[#d4ff00] text-black font-headline-sm text-xs font-bold rounded-xl border-2 border-[#121212] shadow-neo hover:bg-[#caf300] hover:translate-x-0.5 hover:translate-y-0.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Download 2024 Royalty Pack ⚡</span>
+</button>
+</div>
+</div>
+<!-- Bold Punchy Payout Status Alert Banner -->
+<div class="mt-6 p-4 rounded-xl bg-[#ffe9ea] border-2 border-[#121212] shadow-neo flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#ba1a1a] text-white flex items-center justify-center shrink-0 border-2 border-[#121212]">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-headline-sm text-sm font-bold text-black">🚨 Action Needed: Overdue Settlement Detected</span>
+<span class="px-2 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#ba1a1a] text-white border border-[#121212]">
+                    &gt;90 Days Unsettled
+                  </span>
+</div>
+<p class="font-body-md text-xs sm:text-sm text-neutral-800 mt-1">
+                  Title <span class="font-bold underline text-black">Echoes of the Silent Valley</span> has outstanding royalties past the 90-day threshold (<strong class="text-[#ba1a1a] font-mono">$8,200.00</strong>). BookLeaf direct clearance workflow is ready for instant dispatch.
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0 self-end md:self-auto">
+<a class="px-3.5 py-1.5 bg-white text-black font-headline-sm text-xs font-bold rounded-lg border-2 border-[#121212] shadow-neo-sm hover:bg-[#f6f3f2] transition-colors" href="#payout-actions">
+                View Audit
+              </a>
+<button class="px-3.5 py-1.5 bg-[#ba1a1a] text-white font-headline-sm text-xs font-bold rounded-lg border-2 border-[#121212] shadow-neo-sm hover:bg-black transition-colors" onclick="openSupportModal()" type="button">
+                Dispatch Escalation Ticket
+              </button>
+</div>
+</div>
+</section>
+<!-- Chunky Neo-Brutalist Financial Metric Banners -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- 1. Total Copies Sold -->
+<div class="bg-white rounded-2xl border-2 border-[#121212] p-5 flex flex-col justify-between shadow-neo">
+<div>
+<div class="flex items-center justify-between text-neutral-500">
+<span class="font-headline-sm text-xs font-bold uppercase tracking-wider text-black">Copies Sold 📈</span>
+<span class="w-8 h-8 rounded-lg bg-[#f0edec] border-2 border-[#121212] flex items-center justify-center text-black">
+<span class="material-symbols-outlined text-[18px]">auto_stories</span>
+</span>
+</div>
+<div class="font-headline-xl text-3xl font-black text-black mt-3 tabular-nums tracking-tight">4,820</div>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-dashed border-[#121212]/20 flex items-center justify-between">
+<span class="font-body-sm text-xs text-neutral-600">All Editions</span>
+<span class="inline-flex items-center gap-1 font-headline-sm text-xs font-bold text-black bg-[#d4ff00] px-2 py-0.5 rounded-full border border-[#121212]">
+                +14.2% Q2
+              </span>
+</div>
+</div>
+<!-- 2. Royalties Bagged -->
+<div class="bg-white rounded-2xl border-2 border-[#121212] p-5 flex flex-col justify-between shadow-neo">
+<div>
+<div class="flex items-center justify-between text-neutral-500">
+<span class="font-headline-sm text-xs font-bold uppercase tracking-wider text-black">Royalties Bagged 💰</span>
+<span class="w-8 h-8 rounded-lg bg-[#caf300] border-2 border-[#121212] flex items-center justify-center text-black">
+<span class="material-symbols-outlined text-[18px]">monetization_on</span>
+</span>
+</div>
+<div class="font-headline-xl text-3xl font-black text-black mt-3 tabular-nums tracking-tight">
+                $22,400<span class="text-base text-neutral-400">.00</span>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-dashed border-[#121212]/20 flex items-center justify-between">
+<span class="font-body-sm text-xs text-neutral-600">Lifetime Gross</span>
+<span class="font-headline-sm text-xs font-bold px-2 py-0.5 bg-neutral-100 rounded-full border border-[#121212]">Accrued</span>
+</div>
+</div>
+<!-- 3. Paid Out -->
+<div class="bg-white rounded-2xl border-2 border-[#121212] p-5 flex flex-col justify-between shadow-neo">
+<div>
+<div class="flex items-center justify-between text-neutral-500">
+<span class="font-headline-sm text-xs font-bold uppercase tracking-wider text-black">Paid Out 🎉</span>
+<span class="w-8 h-8 rounded-lg bg-[#7df4ff] border-2 border-[#121212] flex items-center justify-center text-black">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+</div>
+<div class="font-headline-xl text-3xl font-black text-emerald-800 mt-3 tabular-nums tracking-tight">
+                $10,000<span class="text-base text-emerald-600">.00</span>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-dashed border-[#121212]/20 flex items-center justify-between">
+<span class="font-body-sm text-xs text-neutral-600">Direct ACH/Wire</span>
+<span class="inline-flex items-center font-headline-sm text-xs font-bold text-black bg-[#7df4ff] px-2 py-0.5 rounded-full border border-[#121212]">
+                44.6% Settled
+              </span>
+</div>
+</div>
+<!-- 4. Pending Bag (Hero Spotlight Card) -->
+<div class="bg-[#121212] text-white rounded-2xl border-2 border-[#121212] p-5 flex flex-col justify-between shadow-neo-lg relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-[#d4ff00]/20 rounded-full blur-md"></div>
+<div>
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-xs font-extrabold uppercase tracking-wider text-[#d4ff00]">Pending Bag 🔥</span>
+<span class="px-2 py-0.5 rounded-full bg-[#d4ff00] text-black font-headline-sm text-[10px] font-black border border-black animate-pulse">
+                  IN CYCLE
+                </span>
+</div>
+<div class="font-headline-xl text-3xl font-black text-white mt-3 tabular-nums tracking-tight">
+                $12,400<span class="text-base text-[#d4ff00]">.00</span>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-neutral-700 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs">
+<span class="text-neutral-400 font-body-sm">Settlement:</span>
+<span class="font-headline-sm font-bold text-[#d4ff00]">Aug 15, 2024</span>
+</div>
+<div class="w-full bg-neutral-800 h-2 rounded-full border border-neutral-700 overflow-hidden">
+<div class="bg-[#d4ff00] h-full" style="width: 65%;"></div>
+</div>
+<span class="text-[10px] text-neutral-400">45-day quarterly cycle</span>
+</div>
+</div>
+<!-- 5. Last Payout Executed -->
+<div class="bg-white rounded-2xl border-2 border-[#121212] p-5 flex flex-col justify-between shadow-neo">
+<div>
+<div class="flex items-center justify-between text-neutral-500">
+<span class="font-headline-sm text-xs font-bold uppercase tracking-wider text-black">Last Payout 💳</span>
+<span class="w-8 h-8 rounded-lg bg-[#f0edec] border-2 border-[#121212] flex items-center justify-center text-black">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</span>
+</div>
+<div class="font-headline-md text-xl font-bold text-black mt-3">May 15, 2024</div>
+</div>
+<div class="mt-4 pt-2 border-t-2 border-dashed border-[#121212]/20 flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-headline-sm text-xs">
+<span class="text-neutral-600">Wire Batch:</span>
+<span class="font-mono text-black font-bold">#W-4409</span>
+</div>
+<span class="font-headline-sm text-xs font-bold text-emerald-700">Amount: $4,500.00 USD</span>
+</div>
+</div>
+</section>
+<!-- Status Pill Guide Strip -->
+<div class="bg-white rounded-xl border-2 border-[#121212] p-3.5 shadow-neo flex flex-col md:flex-row items-center justify-between gap-3">
+<div class="flex items-center gap-3 flex-wrap">
+<span class="font-headline-sm text-xs font-bold uppercase tracking-wider text-black">Status Badges:</span>
+<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 border border-[#121212] font-headline-sm text-xs font-bold">
+              🟢 Settled &amp; Paid
+            </span>
+<span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-[#121212] font-headline-sm text-xs font-bold">
+              🟡 In Payout Cycle (45d)
+            </span>
+<span class="px-2.5 py-1 rounded-full bg-[#ffe9ea] text-[#ba1a1a] border border-[#121212] font-headline-sm text-xs font-bold">
+              🔴 Overdue (90+ Days)
+            </span>
+<span class="px-2.5 py-1 rounded-full bg-purple-100 text-purple-900 border border-[#121212] font-headline-sm text-xs font-bold">
+              🟣 Proof / In Production
+            </span>
+</div>
+<div class="flex items-center gap-1.5 text-xs font-headline-sm font-bold text-neutral-600">
+<span class="material-symbols-outlined text-[16px] text-black">bolt</span>
+<span>Realtime BookLeaf Ledger Engine</span>
+</div>
+</div>
+<!-- Authored Books Table: Creator Drops & Releases -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-lg text-2xl font-extrabold text-black">My Authored Drops</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-[#d4ff00] text-black font-headline-sm text-xs font-bold border border-[#121212]">
+                  3 Titles
+                </span>
+</div>
+<p class="font-body-md text-xs sm:text-sm text-neutral-600 mt-0.5">
+                Catalog metadata, channel circulation stats, and verified royalty accruals
+              </p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<input class="h-10 pl-9 pr-4 bg-white rounded-xl border-2 border-[#121212] text-xs font-body-md placeholder:text-neutral-500 shadow-neo-sm focus:outline-none focus:bg-[#d4ff00]/10 w-60" id="catalog-search" onkeyup="filterBookTable()" placeholder="Search title, ISBN..." type="text">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-black text-[18px]">search</span>
+</div>
+<button class="h-10 px-3 bg-white hover:bg-[#f6f3f2] rounded-xl border-2 border-[#121212] font-headline-sm text-xs font-bold shadow-neo-sm flex items-center gap-1.5 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Filter</span>
+</button>
+</div>
+</div>
+<!-- Books Table Card -->
+<div class="bg-white rounded-2xl border-2 border-[#121212] shadow-neo-lg overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="author-books-table">
+<thead>
+<tr class="bg-[#f0edec] border-b-2 border-[#121212] text-black font-headline-sm text-xs font-bold uppercase tracking-wider h-12">
+<th class="py-3 px-5">Book Details</th>
+<th class="py-3 px-4">Genre &amp; Meta</th>
+<th class="py-3 px-4">Distribution Platforms</th>
+<th class="py-3 px-4 text-right">Copies Sold</th>
+<th class="py-3 px-4 text-right">Royalty Earned</th>
+<th class="py-3 px-4 text-right">Pending Bag</th>
+<th class="py-3 px-4 text-center">Settlement Status</th>
+<th class="py-3 px-5 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-2 divide-[#121212]/10 font-body-md text-xs sm:text-sm text-black">
+<!-- Book 1: Echoes of the Silent Valley (OVERDUE - RED) -->
+<tr class="hover:bg-[#ffe9ea]/30 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-14 h-18 rounded-lg overflow-hidden border-2 border-[#121212] shadow-neo-sm shrink-0 bg-neutral-100">
+<img class="w-full h-full object-cover" data-alt="Cover of Echoes of the Silent Valley" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOjT0-F5crlewWEq3yS-72_VBT1M2-L5M_i8cK_2ByPD6xWEDUSb4SZA1mcuczl0teq0D9mHP0h9vh8hV_6Id6UD5h1sdR4QjZdpr7offPZLULgxWMoTUMr9pMIuSyeik4ScN7M1zg_fE2zMcEIkZlkV69jfaE2dOtvZ9NudOg9Axv0gLHBWNPAwrTepVdRJ1kkkFgfPY8yY__rB18uVsli_i8nneB90CcWQ4X0H79">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-sm font-bold text-black group-hover:text-[#ba1a1a] transition-colors truncate">
+                            Echoes of the Silent Valley
+                          </span>
+<span class="font-mono text-xs text-neutral-600">ISBN 978-1-60309-452-8</span>
+<span class="font-headline-sm text-[11px] font-bold text-neutral-800 mt-0.5">MRP: $24.99 USD</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1">
+<span class="px-2.5 py-0.5 rounded-full bg-[#f0edec] border border-[#121212] text-black font-headline-sm text-[11px] font-bold w-fit">
+                          Literary Fiction
+                        </span>
+<span class="text-xs text-neutral-600">Pub: Oct 18, 2023</span>
+<span class="text-xs font-bold text-emerald-700">● Live on Stores</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-wrap gap-1 max-w-[210px]">
+<span class="px-2 py-0.5 rounded-md bg-white border border-[#121212] text-black font-headline-sm text-[11px] font-bold">Amazon KDP</span>
+<span class="px-2 py-0.5 rounded-md bg-white border border-[#121212] text-black font-headline-sm text-[11px] font-bold">Barnes &amp; Noble</span>
+<span class="px-2 py-0.5 rounded-md bg-[#d4ff00]/40 border border-[#121212] text-black font-headline-sm text-[11px] font-bold">BookLeaf Store</span>
+<span class="px-2 py-0.5 rounded-md bg-white border border-[#121212] text-black font-headline-sm text-[11px] font-bold">IngramSpark</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-bold text-black">
+                      3,120 <span class="text-xs font-normal text-neutral-500 font-body-md">units</span>
+</td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-bold text-black">
+                      $15,600.00
+                    </td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-black text-[#ba1a1a]">
+                      $8,200.00
+                    </td>
+<td class="py-4 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffe9ea] text-[#ba1a1a] border-2 border-[#ba1a1a] font-headline-sm text-xs font-black shadow-neo-sm">
+<span class="w-2 h-2 rounded-full bg-[#ba1a1a] animate-ping"></span>
+<span>🔴 Overdue 90+ Days</span>
+</div>
+<div class="text-[10px] text-neutral-500 mt-1 font-mono">Last payout: Jan 10, 2024</div>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 hover:bg-[#d4ff00] rounded-lg border border-[#121212] text-black transition-colors shadow-neo-sm" onclick="openBreakdownModal('Echoes of the Silent Valley', '$8,200.00', 'overdue')" title="View Breakdown" type="button">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</button>
+<button class="p-1.5 bg-[#ba1a1a] text-white hover:bg-black rounded-lg border border-[#121212] transition-colors shadow-neo-sm" onclick="openSupportModal('Echoes of the Silent Valley')" title="Escalate Payout" type="button">
+<span class="material-symbols-outlined text-[18px]">priority_high</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Book 2: Whispers in the Mist (IN CYCLE - AMBER) -->
+<tr class="hover:bg-amber-50/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-14 h-18 rounded-lg overflow-hidden border-2 border-[#121212] shadow-neo-sm shrink-0 bg-neutral-100">
+<img class="w-full h-full object-cover" data-alt="Cover of Whispers in the Mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2dxN6tcxZ8RuQ4bkuMuxJy5xwP4G4n4qCWnweI0zl_3Q6A1j8qJPdT0hilH_27OSpqBL2JgmQQLsxkSXgkJxe_21DGuhU96_V7qJpqSgK8XxUFsvcIZUsf4UThGqq6oPQ8PnW1ZpkH7JtIFNFOAGBglR_dtPas2Mei8ZpJzXqaGKNjaH_tj6yixcNcLFeiESdFtI2LZPj-dm92soMWPCRRoGcskWQHPZIkQYuRXXj">
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-sm font-bold text-black group-hover:text-[#536600] transition-colors truncate">
+                            Whispers in the Mist
+                          </span>
+<span class="font-mono text-xs text-neutral-600">ISBN 978-1-60309-501-3</span>
+<span class="font-headline-sm text-[11px] font-bold text-neutral-800 mt-0.5">MRP: $19.99 USD</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1">
+<span class="px-2.5 py-0.5 rounded-full bg-[#f0edec] border border-[#121212] text-black font-headline-sm text-[11px] font-bold w-fit">
+                          Mystery &amp; Thriller
+                        </span>
+<span class="text-xs text-neutral-600">Pub: Jan 24, 2024</span>
+<span class="text-xs font-bold text-emerald-700">● Live on Stores</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-wrap gap-1 max-w-[210px]">
+<span class="px-2 py-0.5 rounded-md bg-white border border-[#121212] text-black font-headline-sm text-[11px] font-bold">Amazon KDP</span>
+<span class="px-2 py-0.5 rounded-md bg-[#d4ff00]/40 border border-[#121212] text-black font-headline-sm text-[11px] font-bold">BookLeaf Store</span>
+</div>
+</td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-bold text-black">
+                      1,700 <span class="text-xs font-normal text-neutral-500 font-body-md">units</span>
+</td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-bold text-black">
+                      $6,800.00
+                    </td>
+<td class="py-4 px-4 text-right tabular-nums font-headline-sm font-black text-amber-700">
+                      $4,200.00
+                    </td>
+<td class="py-4 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 border-2 border-amber-500 font-headline-sm text-xs font-bold shadow-neo-sm">
+<span>🟡 In Payout Cycle</span>
+</div>
+<div class="text-[10px] text-neutral-500 mt-1 font-mono">Disburses: Aug 15, 2024</div>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 hover:bg-[#d4ff00] rounded-lg border border-[#121212] text-black transition-colors shadow-neo-sm" onclick="openBreakdownModal('Whispers in the Mist', '$4,200.00', 'in_cycle')" title="View Breakdown" type="button">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</button>
+<button class="p-1.5 hover:bg-[#7df4ff] rounded-lg border border-[#121212] text-black transition-colors shadow-neo-sm" title="Download Statement" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Book 3: The Cartographer's Dream (IN PRODUCTION - PURPLE/CYAN) -->
+<tr class="hover:bg-purple-50/50 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-14 h-18 rounded-lg overflow-hidden border-2 border-[#121212] shadow-neo-sm shrink-0 bg-purple-100 flex flex-col items-center justify-center text-purple-900">
+<span class="material-symbols-outlined text-[24px]">architecture</span>
+<span class="text-[9px] font-black uppercase tracking-wider">PROOF</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-sm font-bold text-black group-hover:text-purple-800 transition-colors truncate">
+                            The Cartographer's Dream
+                          </span>
+<span class="font-mono text-xs text-neutral-500 italic">ISBN In Assignment</span>
+<span class="font-headline-sm text-[11px] font-bold text-neutral-700 mt-0.5">Projected MRP: $26.00 USD</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1">
+<span class="px-2.5 py-0.5 rounded-full bg-[#f0edec] border border-[#121212] text-black font-headline-sm text-[11px] font-bold w-fit">
+                          Historical Fiction
+                        </span>
+<span class="text-xs text-neutral-600">Exp. Pub: Nov 2024</span>
+<span class="text-xs font-bold text-purple-700">● Typesetting Review</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-0.5">
+<span class="text-xs text-neutral-500">Print Partner:</span>
+<span class="px-2 py-0.5 rounded-md bg-purple-100 border border-[#121212] text-purple-900 font-headline-sm text-[11px] font-bold w-fit">
+                          Epitome Books Press
+                        </span>
+</div>
+</td>
+<td class="py-4 px-4 text-right tabular-nums text-neutral-500 font-headline-sm font-bold">
+                      0 <span class="text-xs font-normal font-body-md">units</span>
+</td>
+<td class="py-4 px-4 text-right tabular-nums text-neutral-500 font-headline-sm font-bold">
+                      $0.00
+                    </td>
+<td class="py-4 px-4 text-right tabular-nums text-neutral-500 font-headline-sm font-bold">
+                      $0.00
+                    </td>
+<td class="py-4 px-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-900 border-2 border-purple-400 font-headline-sm text-xs font-bold shadow-neo-sm">
+<span>🟣 Proof / In Production</span>
+</div>
+<div class="text-[10px] text-neutral-500 mt-1 font-mono">Pre-Orders Open Oct 1</div>
+</td>
+<td class="py-4 px-5 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="p-1.5 hover:bg-purple-200 rounded-lg border border-[#121212] text-black transition-colors shadow-neo-sm" title="Manage Production Proofs" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Bottom Consolidated Strip -->
+<div class="bg-[#f0edec] border-t-2 border-[#121212] px-5 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-headline-sm font-bold text-neutral-700">
+<div class="flex items-center gap-2">
+<span>Showing 3 registered drops for Marcus Vance</span>
+<span>•</span>
+<span>Automated sync: <strong class="text-black font-mono">Today 23:59 UTC</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span>Total Pending Bag:</span>
+<span class="px-3 py-1 rounded-lg bg-[#d4ff00] text-black border-2 border-[#121212] shadow-neo-sm text-sm font-black font-mono">
+                  $12,400.00 USD
+                </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dual Creator Section: Sales Distribution Graphic & AI Royalty Statements -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Channel Sales & Partner Distribution (5 cols) -->
+<div class="lg:col-span-5 bg-white rounded-2xl border-2 border-[#121212] p-6 shadow-neo-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-lg text-lg font-bold text-black">Channel Royalty Share 🍩</h3>
+<span class="px-2.5 py-0.5 rounded-full bg-[#caf300] text-black border border-[#121212] font-headline-sm text-xs font-bold">
+                  Q1-Q2 2024
+                </span>
+</div>
+<p class="font-body-md text-xs text-neutral-600 mt-1">
+                Distribution across direct bookstore sales, global retailers, and wholesale distributors
+              </p>
+<!-- Neon Donut Visualization -->
+<div class="my-6 flex items-center justify-center">
+<div class="relative w-44 h-44 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<!-- Background ring -->
+<circle class="text-[#f0edec]" cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-width="14"></circle>
+<!-- Amazon KDP (55% = stroke 131.3) -->
+<circle class="text-[#121212]" cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-dasharray="238.76" stroke-dashoffset="107.44" stroke-linecap="round" stroke-width="14"></circle>
+<!-- BookLeaf Direct (25% = neon lime) -->
+<circle class="text-[#d4ff00]" cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-dasharray="238.76" stroke-dashoffset="179" stroke-linecap="round" stroke-width="14"></circle>
+<!-- Barnes & Noble / Ingram (20% = cyan) -->
+<circle class="text-[#00eefc]" cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-dasharray="238.76" stroke-dashoffset="191" stroke-linecap="round" stroke-width="14"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-headline-xl text-2xl font-black text-black">4.8k</span>
+<span class="font-headline-sm text-[10px] font-bold uppercase tracking-wider text-neutral-500">Total Units</span>
+</div>
+</div>
+</div>
+<!-- Legend breakdown pills -->
+<div class="flex flex-col gap-2 pt-1 font-headline-sm text-xs">
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#f6f3f2] border border-[#121212]">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-md bg-[#121212]"></span>
+<span class="font-bold text-black">Amazon KDP &amp; Kindle</span>
+</div>
+<span class="font-mono font-bold text-black">55% ($12,320)</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#d4ff00]/20 border border-[#121212]">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-md bg-[#d4ff00] border border-black"></span>
+<span class="font-bold text-black">BookLeaf Direct Storefront</span>
+</div>
+<span class="font-mono font-bold text-black">25% ($5,600)</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-xl bg-[#00eefc]/20 border border-[#121212]">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-md bg-[#00eefc] border border-black"></span>
+<span class="font-bold text-black">Barnes &amp; Noble / Ingram</span>
+</div>
+<span class="font-mono font-bold text-black">20% ($4,480)</span>
+</div>
+</div>
+</div>
+<div class="mt-6 p-3 bg-[#caf300]/40 rounded-xl border-2 border-[#121212] flex items-center justify-between font-headline-sm text-xs">
+<span class="text-neutral-800">Author Royalty Share Rate</span>
+<span class="font-black text-black px-2 py-0.5 bg-black text-[#d4ff00] rounded-md">70% Net Receipts</span>
+</div>
+</div>
+<!-- Payout History & n8n AI Statements Ledger (7 cols) -->
+<div class="lg:col-span-7 bg-white rounded-2xl border-2 border-[#121212] p-6 shadow-neo-lg flex flex-col justify-between" id="payout-actions">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-lg text-lg font-bold text-black">Disbursement Receipts &amp; AI Statements ⚡</h3>
+<span class="px-2 py-0.5 rounded bg-black text-[#d4ff00] font-headline-sm text-[10px] font-black uppercase">
+                      n8n Verified
+                    </span>
+</div>
+<p class="font-body-md text-xs text-neutral-600 mt-0.5">
+                    Automated cryptographically signed ledger payouts generated every cycle
+                  </p>
+</div>
+<button class="px-3.5 py-2 bg-white hover:bg-[#d4ff00] text-black font-headline-sm text-xs font-bold rounded-xl border-2 border-[#121212] shadow-neo-sm transition-all flex items-center gap-1.5 self-start sm:self-auto" onclick="showGenerateConfirmModal()" type="button">
+<span class="material-symbols-outlined text-[16px]">sync_saved_locally</span>
+<span>Recalculate Ledgers</span>
+</button>
+</div>
+<!-- Receipts Feed with Neo-Brutalist Border Styling -->
+<div class="mt-5 flex flex-col gap-3">
+<!-- Receipt 1: Q1 2024 -->
+<div class="p-3.5 rounded-xl border-2 border-[#121212] bg-white hover:bg-[#f6f3f2] shadow-neo-sm transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-emerald-100 border-2 border-[#121212] flex items-center justify-center text-emerald-900 shrink-0">
+<span class="material-symbols-outlined text-[20px]">receipt</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-xs font-bold text-black">Q1-2024 Consolidated Statement</span>
+<span class="px-2 py-0.2 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-400">
+                          Settled
+                        </span>
+</div>
+<span class="font-body-sm text-xs text-neutral-600">Period: Jan 01 – Mar 31, 2024 • Wire Transfer Batch #W-4409</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="px-1.5 py-0.2 bg-[#f0edec] border border-[#121212] rounded text-[10px] font-mono font-bold text-neutral-800">
+                          AI Hash: 8f02..c41b
+                        </span>
+<span class="text-[10px] text-neutral-500 font-mono">• Generated May 15, 2024</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto shrink-0">
+<div class="text-right">
+<div class="font-headline-sm text-sm font-black text-black tabular-nums">$4,500.00</div>
+<div class="text-[10px] font-headline-sm font-bold text-emerald-800">J.P. Morgan Chase</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-white border-2 border-[#121212] hover:bg-[#d4ff00] flex items-center justify-center text-black shadow-neo-sm transition-colors" title="Download PDF" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Receipt 2: Q4 2023 -->
+<div class="p-3.5 rounded-xl border-2 border-[#121212] bg-white hover:bg-[#f6f3f2] shadow-neo-sm transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-emerald-100 border-2 border-[#121212] flex items-center justify-center text-emerald-900 shrink-0">
+<span class="material-symbols-outlined text-[20px]">receipt</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-xs font-bold text-black">Q4-2023 Holiday Launch Royalty</span>
+<span class="px-2 py-0.2 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-400">
+                          Settled
+                        </span>
+</div>
+<span class="font-body-sm text-xs text-neutral-600">Period: Oct 01 – Dec 31, 2023 • Direct ACH #ACH-1029</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="px-1.5 py-0.2 bg-[#f0edec] border border-[#121212] rounded text-[10px] font-mono font-bold text-neutral-800">
+                          AI Hash: 3e7a..9910
+                        </span>
+<span class="text-[10px] text-neutral-500 font-mono">• Generated Jan 10, 2024</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto shrink-0">
+<div class="text-right">
+<div class="font-headline-sm text-sm font-black text-black tabular-nums">$5,500.00</div>
+<div class="text-[10px] font-headline-sm font-bold text-emerald-800">J.P. Morgan Chase</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-white border-2 border-[#121212] hover:bg-[#d4ff00] flex items-center justify-center text-black shadow-neo-sm transition-colors" title="Download PDF" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Receipt 3: Q2 2024 (In Cycle) -->
+<div class="p-3.5 rounded-xl border-2 border-[#121212] bg-amber-50 shadow-neo-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-amber-200 border-2 border-[#121212] flex items-center justify-center text-amber-900 shrink-0">
+<span class="material-symbols-outlined text-[20px]">hourglass_top</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-xs font-bold text-black">Q2-2024 Mid-Year Distribution Summary</span>
+<span class="px-2 py-0.2 rounded-full text-[10px] font-black uppercase bg-amber-200 text-amber-900 border border-amber-500">
+                          Pending Cycle
+                        </span>
+</div>
+<span class="font-body-sm text-xs text-neutral-700">Accrual closes Jun 30, 2024 • Target Payout: Aug 15, 2024</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="px-1.5 py-0.2 bg-white border border-[#121212] rounded text-[10px] font-mono font-bold text-neutral-800">
+                          n8n Worker #4 Queued
+                        </span>
+<span class="text-[10px] text-amber-900 font-bold">• 45-day clearance window</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto shrink-0">
+<div class="text-right">
+<div class="font-headline-sm text-sm font-black text-black tabular-nums">$12,400.00</div>
+<div class="text-[10px] font-headline-sm font-bold text-amber-800">Scheduled for ACH</div>
+</div>
+<button class="w-8 h-8 rounded-lg bg-white border-2 border-[#121212] hover:bg-[#d4ff00] flex items-center justify-center text-black shadow-neo-sm transition-colors" title="Preview" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Legal / Compliance Footer Note -->
+<div class="mt-6 pt-3 border-t-2 border-[#121212]/10 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-600 font-body-sm gap-2">
+<span>BookLeaf Operating Co. • Licensed IRS 1099-MISC Filing Node</span>
+<a class="font-headline-sm text-black hover:underline font-bold" href="#payout-actions">
+                Royalty Agreement Terms →
+              </a>
+</div>
+</div>
+</section>
+</div>
+<!-- Interactive Support / Escalation Modal Dialog -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden" id="author-support-modal">
+<div class="bg-white rounded-2xl border-4 border-[#121212] max-w-lg w-full mx-4 p-6 shadow-neo-xl relative flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div>
+<span class="px-2.5 py-0.5 rounded-full bg-[#d4ff00] text-black font-headline-sm text-[10px] font-black border border-black uppercase">
+                Creator Concierge
+              </span>
+<h3 class="font-headline-lg text-xl font-black text-black mt-1">Disbursement Support Escalation</h3>
+</div>
+<button class="w-8 h-8 rounded-lg border-2 border-[#121212] flex items-center justify-center hover:bg-[#ba1a1a] hover:text-white transition-colors" onclick="closeSupportModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-xs sm:text-sm text-neutral-700">
+            Directly ping the BookLeaf Finance &amp; Contract Operations team regarding overdue royalty payments or update wire details for <strong>Marcus Vance</strong>.
+          </p>
+<div class="flex flex-col gap-1.5">
+<label class="font-headline-sm text-xs font-bold text-black">Inquiry Type</label>
+<select class="h-10 px-3 bg-[#f6f3f2] rounded-xl border-2 border-[#121212] text-xs font-headline-sm font-bold text-black focus:outline-none focus:bg-white shadow-neo-sm">
+<option>Overdue Settlement Inquiry (&gt;90 Days - Echoes of the Silent Valley)</option>
+<option>Banking / Wire Routing Update</option>
+<option>Foreign Tax Withholding (W-8BEN / W-9 Update)</option>
+<option>Dispute Channel Circulation Metric</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-headline-sm text-xs font-bold text-black">Message / Supporting Context</label>
+<textarea class="p-3 bg-[#f6f3f2] rounded-xl border-2 border-[#121212] text-xs font-body-md text-black focus:outline-none focus:bg-white shadow-neo-sm" placeholder="Provide any invoice reference numbers or specific settlement cycle notes..." rows="3"></textarea>
+</div>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="px-4 py-2 bg-white hover:bg-neutral-100 rounded-xl border-2 border-[#121212] font-headline-sm text-xs font-bold text-black transition-colors" onclick="closeSupportModal()" type="button">
+              Cancel
+            </button>
+<button class="px-4 py-2 bg-[#d4ff00] hover:bg-[#caf300] rounded-xl border-2 border-[#121212] shadow-neo font-headline-sm text-xs font-black text-black transition-transform active:translate-x-0.5 active:translate-y-0.5" onclick="submitSupportTicket()" type="button">
+              Submit Priority Ticket ⚡
+            </button>
+</div>
+</div>
+</div>
+<!-- Notification Toast Element -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="notification-toast">
+<div class="bg-black text-white px-5 py-3.5 rounded-xl border-2 border-[#d4ff00] shadow-neo-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-[#d4ff00] text-[22px]" id="toast-icon">check_circle</span>
+<span class="font-headline-sm text-xs font-bold text-white" id="toast-message">Statement refresh request transmitted to n8n webhook</span>
+</div>
+</div>
+</main>
+</div>
+<script>
+    // Search Filter for Authored Drops Table
+    function filterBookTable() {
+      const input = document.getElementById('catalog-search');
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById('author-books-table');
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        const tdTitle = tr[i].getElementsByTagName('td')[0];
+        const tdMeta = tr[i].getElementsByTagName('td')[1];
+        if (tdTitle || tdMeta) {
+          const textTitle = tdTitle ? tdTitle.textContent || tdTitle.innerText : '';
+          const textMeta = tdMeta ? tdMeta.textContent || tdMeta.innerText : '';
+          if (textTitle.toLowerCase().indexOf(filter) > -1 || textMeta.toLowerCase().indexOf(filter) > -1) {
+            tr[i].style.display = '';
+          } else {
+            tr[i].style.display = 'none';
+          }
+        }
+      }
+    }
+
+    // Interactive Toast Trigger
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('notification-toast');
+      const toastMsg = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastMsg.innerText = message;
+      toastIcon.innerText = isSuccess ? 'check_circle' : 'error';
+      toastIcon.className = isSuccess ? 'material-symbols-outlined text-[#d4ff00] text-[22px]' : 'material-symbols-outlined text-[#ba1a1a] text-[22px]';
+
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 4000);
+    }
+
+    // Modal Handlers
+    function openSupportModal(bookTitle) {
+      const modal = document.getElementById('author-support-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeSupportModal() {
+      const modal = document.getElementById('author-support-modal');
+      modal.classList.add('hidden');
+    }
+
+    function submitSupportTicket() {
+      closeSupportModal();
+      showToast('Support ticket #BL-OP-9941 created. Creator ops will follow up in 2 hours 🚀');
+    }
+
+    // Author Statement Webhook Trigger (Simulated n8n flow)
+    function triggerAuthorStatementRefresh() {
+      const btn = document.getElementById('trigger-sync-btn');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      icon.classList.add('animate-spin');
+      
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        showToast('⚡ n8n Webhook: Author ledger updated with latest channel settlements!');
+      }, 1400);
+    }
+
+    function showGenerateConfirmModal() {
+      showToast('Recalculation dispatched for Marcus Vance. Fresh statement incoming in 2 mins ✨');
+    }
+
+    function openBreakdownModal(title, pending, status) {
+      showToast(`Opening granular partner report for: ${title}`);
+    }
+  </script>
+</body></html>
