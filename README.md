@@ -55,3 +55,13 @@ The Express server serves the built React app and API on port 3000. Configure `M
 - Single and bulk idempotent summary dispatch
 - Callback-based success/failure logging for n8n executions
 - Local demo summary mode when no n8n webhook is configured
+
+## Assignment 2 submission deliverables
+
+| Requested item | Link or status |
+|---|---|
+| Live Bubble application | Pending Bubble deployment |
+| Author test login | Pending a working Bubble demo account |
+| Admin test login | Pending a working Bubble demo account |
+| n8n workflow JSON | [Download the Bubble workflow template](n8n/bookleaf-bubble-royalty-summary.workflow.json). Imported into n8n Cloud as a draft. The final export is pending credential setup, the Bubble callback, and a verified live execution. |
+| Screen recording | Pending a walkthrough of both Bubble roles and a successful n8n execution that updates the Bubble notification log |

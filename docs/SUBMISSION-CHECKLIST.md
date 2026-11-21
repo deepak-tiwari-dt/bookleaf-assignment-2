@@ -1,11 +1,13 @@
 # Assignment 2: remaining submission work
 
+The [submission deliverables table](../README.md#assignment-2-submission-deliverables) tracks the live URL, both test logins, the workflow export, and the recording in one place.
+
 The repository contains a MERN implementation of the feature set. The brief requires the application itself to be built in Bubble, so the following work must happen in the candidate's Bubble and n8n accounts. This checklist is deliberately separate from the MERN demo: the current Express callback updates MongoDB, not Bubble.
 
 ## 1. Build the Bubble application
 
 1. Create data types for `Author`, `Book`, `User` (or Bubble's built-in User with a role), and `NotificationLog`.
-2. Import the exact `data/Bookleaf Sample Data.json` records. Keep Author and Book as separate types and link each Book to its Author. Preserve the source author and book IDs so you can reconcile imported records.
+2. Import [authors.csv](../data/bubble/authors.csv) and [books.csv](../data/bubble/books.csv), prepared from `data/Bookleaf Sample Data.json`. Upload authors first, then books. Keep `author_id` and `book_id` as text fields and add an `author` field of type Author on Book. Populate that relation by matching each Book's `author_id` to the Author's `author_id`. The `available_on` column is comma-separated display text.
 3. Add author and admin roles. Set Bubble privacy rules so authors can search/read only their own Author, Book, and NotificationLog records; admins can access all records. Verify these rules while logged in as two different authors.
 4. Build the author page with login, book details, per-book and aggregate earned/paid/pending figures, copies sold, payout date, and green/yellow/red status. Treat in-production books separately from published-book payout status.
 5. Build the admin page with author search, city and payout-status filters, author details, a single-author summary action, a bulk action for authors with pending royalties, and a notification log.
@@ -15,9 +17,9 @@ The MERN prototype and its field mapping are documented in [IMPLEMENTATION.md](I
 
 ## 2. Connect Bubble and n8n
 
-1. Import `n8n/bookleaf-royalty-summary.workflow.json` into an n8n account and configure the OpenAI credential and shared webhook secret using n8n credentials/secure environment settings.
-2. Configure a callback that updates the Bubble NotificationLog record to `success` or `failed`, saves the generated summary/error, and records a completion timestamp. The provided export calls the MERN endpoint at `callbackUrl`; change that callback path for Bubble, or make Bubble's backend workflow the callback receiver.
-3. From Bubble, create a notification record first, then call the active n8n webhook with its record ID, author name/ID, published books and royalty ledger totals, and the callback mechanism needed by your Bubble backend workflow.
+1. Import the [Bubble workflow JSON template](../n8n/bookleaf-bubble-royalty-summary.workflow.json). In n8n, assign a Header Auth credential with the header `X-BookLeaf-Token` to the webhook and a separate Header Auth credential with `Authorization: Bearer <OpenAI API key>` to the OpenAI node.
+2. In the two callback nodes, replace the example URL with your Bubble `royalty_summary_callback` endpoint. Assign a Bubble Header Auth credential with `Authorization: Bearer <Bubble API token>` to both nodes. The Bubble backend workflow should require admin API token authentication, accept `logId`, `status`, `summary`, and `error`, and update the matching queued log with the result and completion timestamp. Use the Bubble development endpoint during testing and switch to the live endpoint before the final verification.
+3. From Bubble, create a notification record first, then call the active n8n webhook with `logId`, `author` containing `id` and `name`, a `books` array, and `totals` containing the royalty ledger figures.
 4. Protect the webhook with a shared secret or API key header. Do not put a reusable admin API credential or an OpenAI key in page-visible/client-side data.
 5. Test a successful run, an AI/API failure, a bad webhook secret, and a duplicate click. Confirm each run reaches the right Bubble log and that authors cannot read another author's logs.
 6. Export the final configured workflow as JSON for submission. Do not include live secrets in the exported file.
